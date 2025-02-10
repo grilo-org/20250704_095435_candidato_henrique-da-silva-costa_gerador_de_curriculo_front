@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 const Home = () => {
 
@@ -15,7 +15,7 @@ const Home = () => {
 
     return (
         <div>
-            <h1>Home</h1>
+            <h1>ola</h1>
         </div>
     )
 }
