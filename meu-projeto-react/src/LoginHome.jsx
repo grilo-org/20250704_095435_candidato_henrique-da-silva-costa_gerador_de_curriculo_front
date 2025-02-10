@@ -1,20 +1,21 @@
 import React, { useContext } from 'react'
 import { Usuario } from './contexts/Usuario';
-import { Container } from 'reactstrap';
+import { Button, Container } from 'reactstrap';
 import Cadastrar from './crud/Cadastrar';
+import { useNavigate } from 'react-router-dom';
 
 const LoginHome = () => {
-    const { setAuth } = useContext(Usuario);
+    const nav = useNavigate();
 
     const inputs = {
-        nome: "",
         email: "",
         senha: "",
     };
 
     return (
         <Container>
-            <Cadastrar inputs={inputs} />
+            <Cadastrar inputs={inputs} url={"login"} textoBotao={"LOGIN"} tipoFormulario={"login"} />
+            <Button onClick={() => nav("cadastrar")}>cadastre-se</Button>
         </Container>
     )
 }

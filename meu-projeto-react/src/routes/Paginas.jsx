@@ -6,9 +6,14 @@ import { Usuario } from '../contexts/Usuario'
 const Paginas = () => {
     const { setAuth } = useContext(Usuario);
 
+    const sair = () => {
+        setAuth(false)
+        sessionStorage.setItem("usuario", "");
+    }
+
     return (
         <>
-            <button onClick={() => setAuth(false)}>SAIR</button>
+            <button onClick={sair}>SAIR</button>
 
             <BrowserRouter>
                 <Routes>

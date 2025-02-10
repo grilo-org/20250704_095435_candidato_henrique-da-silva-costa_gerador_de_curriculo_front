@@ -1,22 +1,18 @@
-import React, { useState } from 'react'
-import { Button, FormGroup, Input, Label, Modal, ModalHeader, ModalBody } from 'reactstrap'
+import React, { useContext, useState } from 'react'
+import { Button, FormGroup, Input, Label } from 'reactstrap'
 import styles from "../stylos.module.css"
 import axios from 'axios';
+import { Usuario } from '../contexts/Usuario';
+import { useNavigate } from 'react-router-dom';
 
-const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { } }) => {
+const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
     const [desabilitar, setDesabilitar] = useState(false);
-    const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("CADASTRAR");
-    const [modal, setModal] = useState(false);
-
-    const toggle = () => {
-        setErro({})
-        setMsg("")
-        setFormulario(inputs);
-        setModal(!modal)
-    };
+    const [textoBotaoCarregando, setTextoBotaoCarregando] = useState(textoBotao);
+    const { setAuth } = useContext(Usuario);
+    const nav = useNavigate();
 
     const changeInputs = (e) => {
         const { name, value } = e.target;
@@ -35,12 +31,11 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { } }) => {
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post("http://localhost:1999/cadastrar", formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then((res) => {
-            console.log(res.data);
             for (const [key, value] of Object.entries(formulario)) {
                 // if (value.length == 0) {
                 //     msgerros[key] = "Campo obrigatório";
@@ -62,14 +57,31 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { } }) => {
                     msgerros["email"] = res.data.msg;
                 }
 
+                if (tipoFormulario == "login") {
+                    // console.log(res.data);
+
+                    if (res.data.erro) {
+                        setAuth(false);
+                    } else {
+                        setAuth(true);
+                        sessionStorage.setItem("usuario", JSON.stringify(res.data));
+                    }
+                }
+
+                if (tipoFormulario == "cadastrar") {
+                    if (!res.data.erro) {
+                        nav("/");
+                    }
+                }
+
                 setErro(msgerros);
 
                 if (res.data.erro) {
-                    setModal(true);
                     setMsg(!res.data.campo ? res.data.msg : "");
                     setDesabilitar(false);
-                    setTextoBotaoCarregando("CADASTRAR")
+                    setTextoBotaoCarregando(textoBotaoCarregando)
                 }
+
 
                 setErro(msgerros);
             }
@@ -77,16 +89,15 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { } }) => {
             if (!res.data.erro) {
                 pegarDadosCarregar();
                 setMsg("");
-                setModal(false)
                 setDesabilitar(false);
-                setTextoBotaoCarregando("CADASTRAR")
+                setTextoBotaoCarregando(textoBotaoCarregando)
             }
         }).catch((err) => {
             if (err) {
                 setModal(true);
             }
             setDesabilitar(false)
-            setTextoBotaoCarregando("CADASTRAR")
+            setTextoBotaoCarregando(textoBotaoCarregando)
             setMsg("Erro interno no servidor. Por favor contate o suporte");
         })
     }
@@ -110,7 +121,6 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { } }) => {
         }
     }
 
-
     const tipoInput = (tipo) => {
         if (tipo == "senha") {
             return "password";
@@ -123,34 +133,25 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { } }) => {
 
     return (
         <div>
-            <Button color="success" onClick={toggle}>
-                CADASTRAR
-            </Button>
-            <Modal backdrop={modal ? "static" : true} isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>CADASTRAR</ModalHeader>
-                <ModalBody>
-                    <form onSubmit={enviar}>
-                        <FormGroup>
-                            {formulario ? Object.keys(formulario).map((valor, index) => {
-                                return (
-                                    <div key={index}>
-                                        <div className="">
-                                            <Label htmlFor={valor} className={styles.labels}>{valor}</Label>
-                                            <Input type={tipoInput(valor)} placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} onChange={changeInputs} />
-                                            <p className={styles.erro}>{erro[valor]}</p>
-                                        </div>
-                                    </div>
-                                )
-                            }) : ""}
-                        </FormGroup>
-                        <span className={styles.erro}>{msg}</span>
-                        <div className="d-flex gap-2 justify-content-end">
-                            <Button color="danger" disabled={desabilitar} onClick={() => setModal(false)}>FECHAR</Button>
-                            <Button color="success" disabled={desabilitar}>{textoBotaoCarregando}</Button>
-                        </div>
-                    </form>
-                </ModalBody>
-            </Modal>
+            <form onSubmit={enviar}>
+                <FormGroup>
+                    {formulario ? Object.keys(formulario).map((valor, index) => {
+                        return (
+                            <div key={index}>
+                                <div className="">
+                                    <Label htmlFor={valor} className={styles.labels}>{valor}</Label>
+                                    <Input type={tipoInput(valor)} placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} onChange={changeInputs} />
+                                    <p className={styles.erro}>{erro[valor]}</p>
+                                </div>
+                            </div>
+                        )
+                    }) : ""}
+                </FormGroup>
+                <span className={styles.erro}>{msg}</span>
+                <div className="d-flex gap-2 justify-content-end">
+                    <Button color="success" disabled={desabilitar}>{textoBotaoCarregando}</Button>
+                </div>
+            </form>
         </div>
     )
 }
