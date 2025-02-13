@@ -94,7 +94,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
             }
         }).catch((err) => {
             if (err) {
-                setModal(true);
+                console.log(err);
             }
             setDesabilitar(false)
             setTextoBotaoCarregando(textoBotaoCarregando)
@@ -128,6 +128,10 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
 
         if (tipo == "email") {
             return "email";
+        }
+
+        if (tipo === "descricao" || tipo === "responsabilidades") {
+            return "textarea";
         }
     }
 
