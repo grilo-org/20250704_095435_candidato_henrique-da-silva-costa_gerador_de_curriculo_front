@@ -5,17 +5,8 @@ import { Usuario } from '../contexts/Usuario'
 import Pdf from '../pdf/Pdf'
 
 const Paginas = () => {
-    const { setAuth } = useContext(Usuario);
-
-    const sair = () => {
-        setAuth(false)
-        sessionStorage.setItem("usuario", "");
-    }
-
     return (
         <>
-            {/* <button onClick={sair}>SAIR</button> */}
-
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />

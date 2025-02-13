@@ -58,8 +58,6 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
                 }
 
                 if (tipoFormulario == "login") {
-                    // console.log(res.data);
-
                     if (res.data.erro) {
                         setAuth(false);
                     } else {
@@ -71,6 +69,13 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
                 if (tipoFormulario == "cadastrar") {
                     if (!res.data.erro) {
                         nav("/");
+                    }
+                }
+
+                if (tipoFormulario == "curriculo") {
+                    if (!res.data.erro) {
+                        localStorage.setItem("curriculo", JSON.stringify(formulario));
+                        window.open('/pdf', '_blank');
                     }
                 }
 
@@ -103,7 +108,6 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
     }
 
     const tipoPlaceholder = (tipo) => {
-
         if (tipo == "nome") {
             return "Informe o nome";
         }
@@ -121,7 +125,25 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
         }
     }
 
+    const tipoLabel = (tipo) => {
+        if (tipo === "usuario_id") {
+            return "";
+        }
+
+        return tipo;
+    }
+
     const tipoInput = (tipo) => {
+        const tipoData = ["data_inicio", "data_fim", "data_nascimento"];
+
+        if (tipoData.includes(tipo)) {
+            return "date";
+        }
+
+        if (tipo == "usuario_id") {
+            return "hidden";
+        }
+
         if (tipo == "senha") {
             return "password";
         }
@@ -143,7 +165,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
                         return (
                             <div key={index}>
                                 <div className="">
-                                    <Label htmlFor={valor} className={styles.labels}>{valor}</Label>
+                                    <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor)}</strong></Label>
                                     <Input type={tipoInput(valor)} placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} onChange={changeInputs} />
                                     <p className={styles.erro}>{erro[valor]}</p>
                                 </div>

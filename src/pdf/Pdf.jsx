@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Document, Page, Text, View, StyleSheet, Image, PDFViewer } from "@react-pdf/renderer";
 import img from "../assets/img.png"
 
 const Pdf = () => {
+    const [dados, setdados] = useState(localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : "");
+
     const styles = StyleSheet.create({
         body: {
             padding: 20,
@@ -61,8 +63,8 @@ const Pdf = () => {
                         <Image style={styles.imagem} src={img}></Image>
                     </View>
                     <View style={styles.descricao}>
-                        <Text style={styles.fs24}>Henrique da Silva costa</Text>
-                        <Text style={styles.fs12}>Tenho 2 anos de experiência na área de desenvolvimento web. No primeiro ano, trabalhei com HTML, CSS e JavaScript, aprimorando minhas habilidades em front-end. No segundo ano, foquei em PHP e Laravel, adquirindo expertise em back-end. Além disso, tenho experiência com React, ampliando meu conhecimento em desenvolvimento full-stack.</Text>
+                        <Text style={styles.fs24}>{dados.nome}</Text>
+                        <Text style={styles.fs12}>{dados.descricao}</Text>
                     </View>
                 </View>
                 <View style={styles.conteudo} >
@@ -70,28 +72,28 @@ const Pdf = () => {
                         <Text style={styles.fs24}>Dados pessoais</Text>
                         <View>
                             <Text style={styles.fs16}>Informações de contato</Text>
-                            <Text style={styles.fs12}>Estado civil: <Text style={styles.fs12}>solteiro</Text>
+                            <Text style={styles.fs12}>Estado civil: <Text style={styles.fs12}>{dados.estado_civil}</Text>
                             </Text>
-                            <Text style={styles.fs12}>Telefone: <Text style={styles.fs12}>44 9-97070974</Text>
+                            <Text style={styles.fs12}>Telefone: <Text style={styles.fs12}>{dados.telefone}</Text>
                             </Text>
-                            <Text style={styles.fs12}>Data de nascimneto: <Text style={styles.fs12}>24/10/1999</Text>
+                            <Text style={styles.fs12}>Data de nascimento: <Text style={styles.fs12}>{dados.data_nascimento}</Text>
                             </Text>
                         </View>
                         <View>
                             <Text style={styles.fs16}>Hábilidades</Text>
-                            <Text style={styles.fs12}>HTML | CSS | JavaScript | PHP</Text>
+                            <Text style={styles.fs12}>{dados.habilidades}</Text>
                         </View>
                     </View>
                     <View style={styles.experiencias}>
                         <Text style={styles.fs24}>Experiências</Text>
                         <View>
-                            <Text style={styles.fs16}>Empresa:<Text style={styles.fs12}>Digital One</Text></Text>
-                            <Text style={styles.fs16}>Cargo:<Text style={styles.fs12}>desenvolvedor web</Text></Text>
+                            <Text style={styles.fs16}>Empresa:<Text style={styles.fs12}>{dados.empresa}</Text></Text>
+                            <Text style={styles.fs16}>Cargo:<Text style={styles.fs12}>{dados.cargo}</Text></Text>
                             <Text style={styles.fs16}>Responsabilidades</Text>
-                            <Text style={styles.fs12}>Trabalhei no desenvolvimento de sistemas web</Text>
+                            <Text style={styles.fs12}>{dados.Responsabilidades}</Text>
                             <View>
                                 <Text style={styles.fs16}>Periodo</Text>
-                                <Text style={styles.fs12}>de 05/2021 a 09/2024</Text>
+                                <Text style={styles.fs12}>de {dados.data_inicio} a {dados.data_fim}</Text>
                             </View>
                         </View>
                     </View>
