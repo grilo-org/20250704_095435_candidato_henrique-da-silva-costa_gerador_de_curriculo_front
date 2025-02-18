@@ -15,10 +15,10 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
     const nav = useNavigate();
 
     const changeInputs = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
 
         setFormulario({
-            ...formulario, [name]: value
+            ...formulario, [name]: name === "img" ? files[0] : value
         });
     }
 
@@ -150,6 +150,10 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
 
         if (tipo == "email") {
             return "email";
+        }
+
+        if (tipo == "img") {
+            return "file";
         }
 
         if (tipo === "descricao" || tipo === "responsabilidades") {

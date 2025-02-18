@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Document, Page, Text, View, StyleSheet, Image, PDFViewer } from "@react-pdf/renderer";
 import img from "../assets/img.png"
+import { Usuario } from '../contexts/Usuario';
 
 const Pdf = () => {
     const [dados, setdados] = useState(localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : "");
+
+    useEffect(() => {
+        console.log(Usuario.img);
+    }, []);
 
     const styles = StyleSheet.create({
         body: {
@@ -60,7 +65,7 @@ const Pdf = () => {
             <Page style={styles.body}>
                 <View style={styles.titulo}>
                     <View style={styles.imagemDiv}>
-                        <Image style={styles.imagem} src={img}></Image>
+                        <Image style={styles.imagem} src="http://localhost:1999/uploads/Captura%20de%20tela%202025-01-23%20170943.png" ></Image>
                     </View>
                     <View style={styles.descricao}>
                         <Text style={styles.fs24}>{dados.nome}</Text>

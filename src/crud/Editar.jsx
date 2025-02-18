@@ -3,7 +3,7 @@ import { Button, FormGroup, Input, Label, Modal, ModalHeader, ModalBody } from '
 import styles from "../stylos.module.css"
 import axios from 'axios';
 
-const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null }) => {
+const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
@@ -11,18 +11,29 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null }) => {
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("EDITAR");
     const [modal, setModal] = useState(false);
 
+
     const pegarDados = () => {
+
         setModal(!modal)
         setMsg("")
         setErro({})
         setFormulario(inputs);
 
-        axios.get("http://localhost:1999/pegarporid", { params: { nome: "", id: id } }).then((res) => {
-
+        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
             let ordenado = {
-                nome: res.data.nome,
-                idade: res.data.idade,
+                cargo: res.data.cargo,
+                data_fim: res.data.data_fim,
+                data_inicio: res.data.data_inicio,
+                data_nascimento: res.data.data_nascimento,
+                descricao: res.data.descricao,
+                empresa: res.data.empresa,
+                estado_civil: res.data.estado_civil,
+                habilidades: res.data.habilidades,
                 id: res.data.id,
+                nome: res.data.nome,
+                responsabilidades: res.data.responsabilidades,
+                telefone: res.data.telefone,
+                usuario_id: res.data.usuario_id
             }
 
             setFormulario(ordenado);
@@ -52,14 +63,14 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null }) => {
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post("http://localhost:1999/editar.php", formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then((res) => {
             for (const [key, value] of Object.entries(formulario)) {
                 if (value.length == 0) {
-                    msgerros[key] = "Campo obrigatório";
+                    msgerros[key] = "Campo obrigatório" + key;
                 }
 
                 if (value.length > 10 && key == "idade") {
@@ -100,24 +111,17 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null }) => {
         })
     }
 
-    const tipoInput = (tipo) => {
-        if (tipo == "id") {
-            return "hidden";
-        }
-    }
-
-    const tipoLabel = (tipo) => {
-        if (tipo == "id") {
-            return "";
-        }
-
-        return tipo;
-    }
-
     const tipoPlaceholder = (tipo) => {
-
         if (tipo == "nome") {
             return "Informe o nome";
+        }
+
+        if (tipo == "email") {
+            return "Informe o e-mail";
+        }
+
+        if (tipo == "senha") {
+            return "Informe a senha";
         }
 
         if (tipo == "idade") {
@@ -125,9 +129,49 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null }) => {
         }
     }
 
+    const tipoLabel = (tipo) => {
+        if (tipo === "usuario_id") {
+            return "";
+        }
+
+        if (tipo === "id") {
+            return "";
+        }
+
+        return tipo;
+    }
+
+    const tipoInput = (tipo) => {
+        const tipoData = ["data_inicio", "data_fim", "data_nascimento"];
+
+        if (tipoData.includes(tipo)) {
+            return "date";
+        }
+
+        if (tipo == "usuario_id") {
+            return "hidden";
+        }
+
+        if (tipo == "id") {
+            return "hidden";
+        }
+
+        if (tipo == "senha") {
+            return "password";
+        }
+
+        if (tipo == "email") {
+            return "email";
+        }
+
+        if (tipo === "descricao" || tipo === "responsabilidades") {
+            return "textarea";
+        }
+    }
+
     return (
         <div>
-            <Button color="primary" onClick={pegarDados}>
+            <Button color="success" onClick={pegarDados}>
                 EDITAR
             </Button>
             <Modal backdrop={modal ? "static" : true} isOpen={modal} toggle={toggle}>

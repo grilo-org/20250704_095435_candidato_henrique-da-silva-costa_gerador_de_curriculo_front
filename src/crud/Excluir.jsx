@@ -3,14 +3,18 @@ import React, { useState } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import styles from "../stylos.module.css"
 
-const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { } }) => {
+const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "" }) => {
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
 
     const toggle = () => setModal(!modal);
 
-    const excluir = () => {
-        axios.delete("http://localhost:1999/excluir", { params: { id: id } }).then((res) => {
+    const deletar = () => {
+        axios.options(`http://localhost:1999/${url}`, { params: { id: id } }, {
+            headers: {
+                "content-type": "application/json"
+            }
+        }).then((res) => {
 
             if (res.data.erro) {
                 setModal(true);
@@ -21,7 +25,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { } }) => {
             setModal(false)
             pegarDadosCarregar();
         }).catch((err) => {
-            console.log(err);
+            setMsg("Erro interno no servidor, contate o suporte");
         })
     }
 
@@ -40,7 +44,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { } }) => {
                     <Button color="secondary" onClick={() => setModal(false)}>
                         CANCELAR
                     </Button>
-                    <Button color="danger" onClick={excluir}>
+                    <Button color="danger" onClick={deletar}>
                         EXCLUIR
                     </Button>{' '}
                 </ModalFooter>
