@@ -22,6 +22,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
         axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
             let ordenado = {
                 cargo: res.data.cargo,
+                img: res.data.img,
                 data_fim: res.data.data_fim,
                 data_inicio: res.data.data_inicio,
                 data_nascimento: res.data.data_nascimento,
@@ -47,10 +48,10 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
     }
 
     const changeInputs = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
 
         setFormulario({
-            ...formulario, [name]: value
+            ...formulario, [name]: name === "img" ? files[0] : value
         });
     }
 
@@ -150,6 +151,10 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
 
         if (tipo == "usuario_id") {
             return "hidden";
+        }
+
+        if (tipo == "img") {
+            return "file";
         }
 
         if (tipo == "id") {

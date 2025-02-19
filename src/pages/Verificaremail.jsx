@@ -1,18 +1,11 @@
 import React from 'react'
 import { Button, Container } from 'reactstrap'
-import Cadastrar from './crud/Cadastrar'
-import { FaArrowLeft } from 'react-icons/fa'
+import Cadastrar from '../crud/Cadastrar'
 import { useNavigate } from 'react-router-dom'
+import { FaArrowLeft } from 'react-icons/fa'
 
-const Cadastro = () => {
+const Verificaremail = () => {
     const nav = useNavigate();
-
-    const inputs = {
-        img: "",
-        nome: "",
-        email: "",
-        senha: ""
-    }
 
     return (
         <>
@@ -20,10 +13,10 @@ const Cadastro = () => {
                 <FaArrowLeft fontSize={45} className="m-2" />
             </Button>
             <Container>
-                <Cadastrar inputs={inputs} url={"cadastrar"} textoBotao={"CADASTRAR"} tipoFormulario={"cadastrar"} />
+                <Cadastrar textoBotao={"VERIFICAR"} url={"verificaremail"} inputs={{ emailVerificar: "" }} tipoFormulario={"verificarEmail"} />
             </Container>
         </>
     )
 }
 
-export default Cadastro
+export default Verificaremail

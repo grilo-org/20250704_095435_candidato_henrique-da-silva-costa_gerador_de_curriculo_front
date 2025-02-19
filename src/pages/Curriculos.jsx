@@ -96,7 +96,7 @@ const Curriculos = () => {
                                 {dados.length > 0 ? dados.map((dado, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{dado.nome ? dado.nome : "não informado"}</td>
+                                            <td>{dado.nome ? dado.nome.slice(0, 30) + "..." : "não informado"}</td>
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <Button color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
                                                 <Editar id={dado.id} inputs={inputs} url={"editar/curriculo"} />

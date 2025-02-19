@@ -15,7 +15,8 @@ const LoginHome = () => {
     return (
         <Container>
             <Cadastrar inputs={inputs} url={"login"} textoBotao={"LOGIN"} tipoFormulario={"login"} />
-            <Button onClick={() => nav("cadastrar")}>cadastre-se</Button>
+            <Button onClick={() => nav("/cadastrar")}>cadastre-se</Button>
+            <Button onClick={() => nav("/verificaremail")}>recuperar senha</Button>
         </Container>
     )
 }

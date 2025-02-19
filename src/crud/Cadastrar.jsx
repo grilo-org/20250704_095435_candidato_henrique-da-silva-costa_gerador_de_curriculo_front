@@ -79,6 +79,22 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
                     }
                 }
 
+                if (tipoFormulario == "verificarEmail") {
+                    if (!res.data.erro) {
+                        localStorage.setItem("emailVerificar", JSON.stringify(formulario.emailVerificar));
+                        nav("/recuperarsenha")
+                    } else {
+                        localStorage.setItem("emailVerificar", "");
+                    }
+                }
+
+                if (tipoFormulario == "recuperarSenha") {
+                    if (!res.data.erro) {
+                        localStorage.setItem("emailVerificar", "");
+                        nav("/")
+                    }
+                }
+
                 setErro(msgerros);
 
                 if (res.data.erro) {
@@ -130,6 +146,10 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
             return "";
         }
 
+        if (tipoFormulario == "recuperarSenha" && tipo == "emailVerificar") {
+            return "";
+        }
+
         return tipo;
     }
 
@@ -138,6 +158,10 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
 
         if (tipoData.includes(tipo)) {
             return "date";
+        }
+
+        if (tipoFormulario == "recuperarSenha" && tipo == "emailVerificar") {
+            return "hidden";
         }
 
         if (tipo == "usuario_id") {

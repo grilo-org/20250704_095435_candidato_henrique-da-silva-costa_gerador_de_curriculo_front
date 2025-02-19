@@ -4,11 +4,13 @@ import Home from '../Home'
 import { Usuario } from '../contexts/Usuario'
 import Pdf from '../pdf/Pdf'
 import Curriculos from '../pages/Curriculos'
+import InfoUsuario from '../components/InfoUsuario'
 
 const Paginas = () => {
     return (
         <>
             <BrowserRouter>
+                <InfoUsuario />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/pdf" element={<Pdf />} />
