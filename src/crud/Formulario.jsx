@@ -4,8 +4,9 @@ import styles from "../stylos.module.css"
 import axios from 'axios';
 import { Usuario } from '../contexts/Usuario';
 import { useNavigate } from 'react-router-dom';
+import { colunas, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
-const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "" }) => {
+const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "", botaoCor = "success" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
@@ -37,15 +38,15 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
             },
         }).then((res) => {
             for (const [key, value] of Object.entries(formulario)) {
-                // if (value.length == 0) {
-                //     msgerros[key] = "Campo obrigatório";
-                // }
+                if (value != null && value.length == 0 && key != "img") {
+                    msgerros[key] = "Campo obrigatório";
+                }
 
-                if (value.length > 10 && key == "idade") {
+                if (value != null && value.length > 10 && key == "idade") {
                     msgerros[key] = `O campo ${key} dever ter no maximo 10 caracteres`;
                 }
 
-                if (value.length > 255) {
+                if (value != null && value.length > 255) {
                     msgerros[key] = `O campo ${key} dever ter no maximo 255 caracteres`;
                 }
 
@@ -66,7 +67,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
                     }
                 }
 
-                if (tipoFormulario == "cadastrar") {
+                if (tipoFormulario == "cadastrarUsuario") {
                     if (!res.data.erro) {
                         nav("/");
                     }
@@ -123,91 +124,29 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBota
         })
     }
 
-    const tipoPlaceholder = (tipo) => {
-        if (tipo == "nome") {
-            return "Informe o nome";
-        }
-
-        if (tipo == "email") {
-            return "Informe o e-mail";
-        }
-
-        if (tipo == "senha") {
-            return "Informe a senha";
-        }
-
-        if (tipo == "idade") {
-            return "Informe a Idade";
-        }
-    }
-
-    const tipoLabel = (tipo) => {
-        if (tipo === "usuario_id") {
-            return "";
-        }
-
-        if (tipoFormulario == "recuperarSenha" && tipo == "emailVerificar") {
-            return "";
-        }
-
-        return tipo;
-    }
-
-    const tipoInput = (tipo) => {
-        const tipoData = ["data_inicio", "data_fim", "data_nascimento"];
-
-        if (tipoData.includes(tipo)) {
-            return "date";
-        }
-
-        if (tipoFormulario == "recuperarSenha" && tipo == "emailVerificar") {
-            return "hidden";
-        }
-
-        if (tipo == "usuario_id") {
-            return "hidden";
-        }
-
-        if (tipo == "senha") {
-            return "password";
-        }
-
-        if (tipo == "email") {
-            return "email";
-        }
-
-        if (tipo == "img") {
-            return "file";
-        }
-
-        if (tipo === "descricao" || tipo === "responsabilidades") {
-            return "textarea";
-        }
-    }
-
     return (
         <div>
             <form onSubmit={enviar}>
                 <FormGroup>
-                    {formulario ? Object.keys(formulario).map((valor, index) => {
-                        return (
-                            <div key={index}>
-                                <div className="">
-                                    <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor)}</strong></Label>
-                                    <Input type={tipoInput(valor)} placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} onChange={changeInputs} />
+                    <div className="row">
+                        {formulario ? Object.keys(formulario).map((valor, index) => {
+                            return (
+                                <div key={index} className={colunas(valor, tipoFormulario)}>
+                                    <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
+                                    <Input type={tipoInput(valor, tipoFormulario)} placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} onChange={changeInputs} />
                                     <p className={styles.erro}>{erro[valor]}</p>
                                 </div>
-                            </div>
-                        )
-                    }) : ""}
+                            )
+                        }) : ""}
+                    </div>
                 </FormGroup>
                 <span className={styles.erro}>{msg}</span>
                 <div className="d-flex gap-2 justify-content-end">
-                    <Button color="success" disabled={desabilitar}>{textoBotaoCarregando}</Button>
+                    <Button color={botaoCor} disabled={desabilitar}>{textoBotaoCarregando}</Button>
                 </div>
             </form>
         </div>
     )
 }
 
-export default Cadastrar
+export default Formulario

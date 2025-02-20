@@ -10,7 +10,6 @@ const Paginas = () => {
     return (
         <>
             <BrowserRouter>
-                <InfoUsuario />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/pdf" element={<Pdf />} />

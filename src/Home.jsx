@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { Button } from 'reactstrap';
-import Cadastrar from './crud/Cadastrar';
+import { Button, Container } from 'reactstrap';
+import Formulario from './crud/Formulario';
 import { Usuario } from './contexts/Usuario';
 import { useNavigate } from 'react-router-dom';
+import InfoUsuario from './components/InfoUsuario';
 const Home = () => {
     const [usuario, setUsuario] = useState(sessionStorage.getItem("usuario") ? JSON.parse(sessionStorage.getItem("usuario")) : "");
     const nav = useNavigate();
@@ -11,23 +12,27 @@ const Home = () => {
     const inputs = {
         nome: "",
         img: "",
-        descricao: "",
         estado_civil: "",
         telefone: "",
         data_nascimento: "",
         empresa: "",
-        cargo: "",
-        responsabilidades: "",
-        habilidades: "",
         data_inicio: "",
         data_fim: "",
+        habilidades: "",
+        cargo: "",
+        descricao: "",
+        responsabilidades: "",
         usuario_id: usuario.id,
     }
 
     return (
         <>
-            <Button onClick={() => nav("/curriculos")} color="primary">VER CURRICULOS</Button>
-            <Cadastrar textoBotao={"CADASTRAR"} url={"cadastrar/curriculo"} inputs={inputs} tipoFormulario="curriculo" />
+            <InfoUsuario />
+            <Container>
+                <h1>Cadastrar currículo</h1>
+                <Button className="mt-2" onClick={() => nav("/curriculos")} color="primary">VER CURRICULOS</Button>
+                <Formulario textoBotao={"CADASTRAR"} url={"cadastrar/curriculo"} inputs={inputs} tipoFormulario="curriculo" />
+            </Container>
         </>
     )
 }

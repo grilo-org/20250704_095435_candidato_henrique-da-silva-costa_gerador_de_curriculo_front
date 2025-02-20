@@ -8,6 +8,7 @@ import Editar from '../crud/Editar';
 import Excluir from '../crud/Excluir';
 import styles from "../stylos.module.css";
 import Carregando from '../components/Carregando';
+import InfoUsuario from '../components/InfoUsuario';
 
 const Curriculos = () => {
     const [dados, setDados] = useState([]);
@@ -79,6 +80,7 @@ const Curriculos = () => {
 
     return (
         <>
+            <InfoUsuario />
             <Button color="transparent" onClick={() => nav("/")}><FaArrowLeft size={40} /></Button>
             <Container>
                 <h1>Curriculos</h1>
@@ -99,7 +101,7 @@ const Curriculos = () => {
                                             <td>{dado.nome ? dado.nome.slice(0, 30) + "..." : "não informado"}</td>
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <Button color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
-                                                <Editar id={dado.id} inputs={inputs} url={"editar/curriculo"} />
+                                                <Editar id={dado.id} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
                                                 <Excluir url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
