@@ -38,7 +38,7 @@ const Curriculos = () => {
     }
 
     const pegarCurriculo = (id) => {
-        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
+        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
             localStorage.setItem("curriculo", JSON.stringify(res.data));
             window.open('/pdf', '_blank');
         }).catch((err) => {
@@ -48,7 +48,7 @@ const Curriculos = () => {
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`http://localhost:1999/curriculo/${usuario.id}`, {
+        axios.get(`https://henriquedeveloper.com.br/curriculo/${usuario.id}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
