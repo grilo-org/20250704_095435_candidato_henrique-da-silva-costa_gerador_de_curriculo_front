@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Formulario from '../crud/Formulario'
-import axios from 'axios';
 import { Button, Container } from 'reactstrap';
 import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';

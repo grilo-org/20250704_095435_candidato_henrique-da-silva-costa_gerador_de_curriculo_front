@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LoginHome from '../LoginHome'
 import CadastrarUsuario from '../CadastrarUsuario'
 import Verificaremail from '../pages/Verificaremail'
-import RecuperarSenha from '../pages/recuperarSenha'
+import RecuperarSenha from '../pages/RecuperarSenha'
 
 const Login = () => {
     return (
