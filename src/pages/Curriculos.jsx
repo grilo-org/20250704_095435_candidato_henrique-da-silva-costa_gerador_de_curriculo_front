@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import { Button, Container, Table } from 'reactstrap';
 import Editar from '../crud/Editar';
@@ -9,6 +8,7 @@ import Excluir from '../crud/Excluir';
 import styles from "../stylos.module.css";
 import Carregando from '../components/Carregando';
 import InfoUsuario from '../components/InfoUsuario';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const Curriculos = () => {
     const [dados, setDados] = useState([]);
