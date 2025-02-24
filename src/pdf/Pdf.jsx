@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { PDFViewer, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
 
 const Pdf = () => {
