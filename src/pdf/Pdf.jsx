@@ -11,14 +11,14 @@ const Pdf = () => {
             padding: 20,
             fontFamily: 'Helvetica',
         },
-        fs24: {
-            fontSize: 24,
+        fs30: {
+            fontSize: 30,
         },
-        fs16: {
-            fontSize: 16,
+        fs26: {
+            fontSize: 26,
         },
-        fs12: {
-            fontSize: 12,
+        fs20: {
+            fontSize: 20,
         },
         imagem: {
             maxWidth: "100%",
@@ -61,34 +61,34 @@ const Pdf = () => {
                         <Image style={styles.imagem} src={linkImagem} />
                     </View>
                     <View style={styles.descricao}>
-                        <Text style={styles.fs24}>{dados.nome}</Text>
-                        <Text style={styles.fs12}>{dados.descricao}</Text>
+                        <Text style={styles.fs30}>{dados.nome}</Text>
+                        <Text style={styles.fs20}>{dados.descricao}</Text>
                     </View>
                 </View>
                 <View style={styles.conteudo}>
                     <View style={styles.sobre}>
-                        <Text style={styles.fs24}>Dados pessoais</Text>
+                        <Text style={styles.fs30}>Dados pessoais</Text>
                         <View>
-                            <Text style={styles.fs16}>Informações de contato</Text>
-                            <Text style={styles.fs12}>Estado civil: {dados.estado_civil}</Text>
-                            <Text style={styles.fs12}>Telefone: {dados.telefone}</Text>
-                            <Text style={styles.fs12}>Data de nascimento: {dados.data_nascimento}</Text>
+                            <Text style={styles.fs26}>Informações de contato</Text>
+                            <Text style={styles.fs20}>Estado civil: {dados.estado_civil}</Text>
+                            <Text style={styles.fs20}>Telefone: {dados.telefone}</Text>
+                            <Text style={styles.fs20}>Data de nascimento: {dados.data_nascimento}</Text>
                         </View>
                         <View>
-                            <Text style={styles.fs16}>Habilidades</Text>
-                            <Text style={styles.fs12}>{dados.habilidades}</Text>
+                            <Text style={styles.fs26}>Habilidades</Text>
+                            <Text style={styles.fs20}>{dados.habilidades}</Text>
                         </View>
                     </View>
                     <View style={styles.experiencias}>
-                        <Text style={styles.fs24}>Experiências</Text>
+                        <Text style={styles.fs30}>Experiências</Text>
                         <View>
-                            <Text style={styles.fs16}>Empresa: {dados.empresa}</Text>
-                            <Text style={styles.fs16}>Cargo: {dados.cargo}</Text>
-                            <Text style={styles.fs16}>Responsabilidades</Text>
-                            <Text style={styles.fs12}>{dados.Responsabilidades}</Text>
+                            <Text style={styles.fs26}>Empresa: {dados.empresa}</Text>
+                            <Text style={styles.fs26}>Cargo: {dados.cargo}</Text>
+                            <Text style={styles.fs26}>Responsabilidades</Text>
+                            <Text style={styles.fs20}>{dados.Responsabilidades}</Text>
                             <View>
-                                <Text style={styles.fs16}>Período</Text>
-                                <Text style={styles.fs12}>de {dados.data_inicio} a {dados.data_fim}</Text>
+                                <Text style={styles.fs26}>Período</Text>
+                                <Text style={styles.fs20}>de {dados.data_inicio} a {dados.data_fim}</Text>
                             </View>
                         </View>
                     </View>
