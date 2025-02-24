@@ -11,7 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@react-pdf/renderer": "^4.2.1",
+    "@react-pdf/renderer": "^4.2.2",
     "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "react": "^18.3.1",
