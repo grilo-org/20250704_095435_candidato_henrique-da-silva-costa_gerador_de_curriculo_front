@@ -1,10 +1,8 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from '../Home'
-import { Usuario } from '../contexts/Usuario'
-import Pdf from '../pdf/Pdf'
 import Curriculos from '../pages/Curriculos'
-import InfoUsuario from '../components/InfoUsuario'
+import Pdf from '../pdf/Pdf'
 
 const Paginas = () => {
     return (
