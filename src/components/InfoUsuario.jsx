@@ -24,7 +24,7 @@ const InfoUsuario = () => {
                     {
                         usuario.img ? <img src={usuario.img} alt="" height={50} width={50} className="rounded-circle object-fit-cover" /> : <FaUserAlt fontSize={50} />
                     }
-                    <h3>{usuario.nome}</h3>
+                    <h3>{usuario.nome ? usuario.nome.slice(0, 10) + "..." : ""}</h3>
                 </DropdownToggle>
                 <DropdownMenu className="mt-2">
                     <DropdownItem>

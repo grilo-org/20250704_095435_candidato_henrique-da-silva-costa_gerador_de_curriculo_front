@@ -4,7 +4,7 @@ import styles from "../stylos.module.css"
 import axios from 'axios';
 import { colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
-const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = "", tipoFormulario = "" }) => {
+const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = "", tipoFormulario = "", tamanhoBotao = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
@@ -20,7 +20,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
         setErro({})
         setFormulario(inputs);
 
-        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
+        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
             let ordenado = {
                 cargo: res.data.cargo,
                 img: res.data.img,
@@ -65,7 +65,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -115,7 +115,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
 
     return (
         <div>
-            <Button color="success" onClick={pegarDados}>
+            <Button color="success" className={styles.fonteBotao12} size={tamanhoBotao} onClick={pegarDados}>
                 EDITAR
             </Button>
             <Modal backdrop={modal ? "static" : true} fullscreen={tamanhoModalFull(tipoFormulario)} isOpen={modal} toggle={toggle}>

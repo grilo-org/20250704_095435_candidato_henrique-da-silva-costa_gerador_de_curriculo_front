@@ -21,7 +21,9 @@ const Pdf = () => {
             fontSize: 20,
         },
         imagem: {
-            maxWidth: "100%",
+            maxWidth: "300px",
+            height: "300px",
+            objectFit: "contain"
         },
         titulo: {
             flexDirection: "column",
@@ -47,7 +49,7 @@ const Pdf = () => {
     });
 
     const MyDocument = () => (
-        <Document>
+        <Document title={"curriculo"}>
             <Page style={styles.body}>
                 <View style={styles.titulo}>
                     <View style={styles.imagemDiv}>

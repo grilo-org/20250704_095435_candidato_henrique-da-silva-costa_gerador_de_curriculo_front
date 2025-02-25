@@ -3,14 +3,14 @@ import React, { useState } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import styles from "../stylos.module.css"
 
-const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "" }) => {
+const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "", tamanhoBotao = "" }) => {
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
 
     const toggle = () => setModal(!modal);
 
     const deletar = () => {
-        axios.options(`https://henriquedeveloper.com.br/${url}`, { params: { id: id } }, {
+        axios.options(`http://localhost:1999/${url}`, { params: { id: id } }, {
             headers: {
                 "content-type": "application/json"
             }
@@ -31,7 +31,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
 
     return (
         <div>
-            <Button color="danger" onClick={toggle}>
+            <Button color="danger" className={styles.fonteBotao12} size={tamanhoBotao} onClick={toggle}>
                 EXCLUIR
             </Button>
             <Modal backdrop={modal ? "static" : true} isOpen={modal} toggle={toggle}>

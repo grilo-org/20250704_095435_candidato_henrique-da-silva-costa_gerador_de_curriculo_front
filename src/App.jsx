@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
 import Home from './Home'
 import { useContext, useEffect, useState } from 'react'
@@ -12,13 +12,11 @@ function App() {
   const { auth, setAuth } = useContext(Usuario);
 
   useEffect(() => {
-    axios.post("https://henriquedeveloper.com.br/verificaremail", { emailVerificar: usuario.email }, {
+    axios.post("http://localhost:1999/verificaremail", { emailVerificar: usuario.email }, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }).then((res) => {
-      console.log(res.data.erro);
-
       if (res.data.erro) {
         setAuth(false);
         sessionStorage.setItem("usuario", "");

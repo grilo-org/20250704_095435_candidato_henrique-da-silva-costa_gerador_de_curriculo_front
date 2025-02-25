@@ -9,6 +9,7 @@ import styles from "../stylos.module.css";
 import Carregando from '../components/Carregando';
 import InfoUsuario from '../components/InfoUsuario';
 import { FaArrowLeft } from 'react-icons/fa';
+import moment from 'moment';
 
 const Curriculos = () => {
     const [dados, setDados] = useState([]);
@@ -38,7 +39,7 @@ const Curriculos = () => {
     }
 
     const pegarCurriculo = (id) => {
-        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
+        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
             localStorage.setItem("curriculo", JSON.stringify(res.data));
             window.open('/pdf', '_blank');
         }).catch((err) => {
@@ -48,7 +49,7 @@ const Curriculos = () => {
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`https://henriquedeveloper.com.br/curriculo/${usuario.id}`, {
+        axios.get(`http://localhost:1999/curriculo/${usuario.id}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -86,7 +87,7 @@ const Curriculos = () => {
                 <h1>Curriculos</h1>
 
                 {dados.length > 0 ?
-                    <Table responsive striped>
+                    <Table responsive striped size="sm">
                         <thead>
                             <tr>
                                 <th>Titulo</th>
@@ -99,15 +100,15 @@ const Curriculos = () => {
                                     return (
                                         <tr key={index}>
                                             <td>{dado.nome ? dado.nome.slice(0, 30) + "..." : "não informado"}</td>
+                                            <td>{moment(dado.criado).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
-                                                <Button color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
-                                                <Editar id={dado.id} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
-                                                <Excluir url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
+                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
+                                                <Editar tamanhoBotao={"sm"} id={dado.id} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
+                                                <Excluir tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
                                     )
                                 }) : ""}
-
                             </>
                         </tbody>
                     </Table>

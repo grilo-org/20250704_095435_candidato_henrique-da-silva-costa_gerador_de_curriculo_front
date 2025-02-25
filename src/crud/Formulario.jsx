@@ -6,7 +6,7 @@ import { Usuario } from '../contexts/Usuario';
 import { useNavigate } from 'react-router-dom';
 import { colunas, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
-const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "", botaoCor = "success" }) => {
+const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "", botaoCor = "success", tamanhoBotao = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
@@ -32,7 +32,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -48,6 +48,14 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
 
                 if (value != null && value.length > 255) {
                     msgerros[key] = `O campo ${key} dever ter no maximo 255 caracteres`;
+                }
+
+                if (res.data.campo === "data_nascimento") {
+                    msgerros["data_nascimento"] = res.data.msg;
+                }
+
+                if (res.data.campo === "data_inicio") {
+                    msgerros["data_inicio"] = res.data.msg;
                 }
 
                 if (res.data.campo) {
@@ -76,7 +84,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 if (tipoFormulario == "curriculo") {
                     if (!res.data.erro) {
                         localStorage.setItem("curriculo", JSON.stringify(formulario));
-                        window.open('/pdf', '_blank');
+                        nav("/curriculos");
                     }
                 }
 
@@ -142,7 +150,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 </FormGroup>
                 <span className={styles.erro}>{msg}</span>
                 <div className="d-flex gap-2 justify-content-end">
-                    <Button color={botaoCor} disabled={desabilitar}>{textoBotaoCarregando}</Button>
+                    <Button color={botaoCor} className={styles.fonteBotao12} size={tamanhoBotao} disabled={desabilitar}>{textoBotaoCarregando}</Button>
                 </div>
             </form>
         </div>
