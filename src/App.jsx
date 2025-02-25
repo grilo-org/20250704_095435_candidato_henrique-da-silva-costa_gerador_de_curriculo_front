@@ -12,7 +12,7 @@ function App() {
   const { auth, setAuth } = useContext(Usuario);
 
   useEffect(() => {
-    axios.post("henriquedeveloper.com.br/verificaremail", { emailVerificar: usuario.email }, {
+    axios.post("https://henriquedeveloper.com.br/verificaremail", { emailVerificar: usuario.email }, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

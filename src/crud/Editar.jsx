@@ -20,7 +20,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
         setErro({})
         setFormulario(inputs);
 
-        axios.get(`henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
+        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
             let ordenado = {
                 cargo: res.data.cargo,
                 img: res.data.img,
@@ -65,7 +65,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

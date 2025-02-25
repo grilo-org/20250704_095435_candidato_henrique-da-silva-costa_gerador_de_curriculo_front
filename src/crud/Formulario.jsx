@@ -32,7 +32,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

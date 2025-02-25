@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'henriquedeveloper.com.br/', // URL do seu backend
+        target: 'https://henriquedeveloper.com.br/', // URL do seu backend
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''), // Remove o prefixo /api
       },
