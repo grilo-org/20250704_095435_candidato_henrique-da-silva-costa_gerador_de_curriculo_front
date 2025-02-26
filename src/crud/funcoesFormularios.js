@@ -70,6 +70,10 @@ export const tipoLabel = (tipo, tipoFormulario) => {
         return "";
     }
 
+    if (tipo === "img") {
+        return "imagem";
+    }
+
     if (tipo == "data_nascimento") {
         return "data de nascimento";
     }
