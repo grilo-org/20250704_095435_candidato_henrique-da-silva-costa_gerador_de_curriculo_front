@@ -83,6 +83,18 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = 
                     msgerros[key] = `O campo ${key} dever ter no maximo 255 caracteres`;
                 }
 
+                if (res.data.campo === "data_nascimento") {
+                    msgerros["data_nascimento"] = res.data.msg;
+                }
+
+                if (res.data.campo === "data_inicio") {
+                    msgerros["data_inicio"] = res.data.msg;
+                }
+
+                if (res.data.campo) {
+                    msgerros[res.data.campo] = res.data.msg;
+                }
+
                 setErro(msgerros);
 
                 if (res.data.erro) {
