@@ -84,7 +84,7 @@ const Pdf = () => {
                             <Text style={styles.fs26}>Empresa: {dados.empresa}</Text>
                             <Text style={styles.fs26}>Cargo: {dados.cargo}</Text>
                             <Text style={styles.fs26}>Responsabilidades</Text>
-                            <Text style={styles.fs20}>{dados.Responsabilidades}</Text>
+                            <Text style={styles.fs20}>{dados.responsabilidades}</Text>
                             <View>
                                 <Text style={styles.fs26}>Período</Text>
                                 <Text style={styles.fs20}>de {dados.data_inicio} a {dados.data_fim}</Text>
