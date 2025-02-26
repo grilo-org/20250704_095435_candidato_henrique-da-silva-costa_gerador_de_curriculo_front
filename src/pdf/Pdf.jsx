@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PDFViewer, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
 import { FaUserAlt } from 'react-icons/fa';
+import moment from 'moment';
 
 const Pdf = () => {
     const [dados, setDados] = useState(localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : {});
