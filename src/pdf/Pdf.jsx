@@ -55,7 +55,7 @@ const Pdf = () => {
                 <View style={styles.titulo}>
                     <View style={styles.imagemDiv}>
                         {
-                            linkImagem.length > 0 ? <Image style={styles.imagem} src={linkImagem} /> :
+                            linkImagem ? <Image style={styles.imagem} src={linkImagem} /> :
                                 <FaUserAlt fontSize={50} />
                         }
                     </View>
