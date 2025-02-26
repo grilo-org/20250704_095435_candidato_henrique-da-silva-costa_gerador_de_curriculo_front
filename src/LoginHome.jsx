@@ -15,7 +15,7 @@ const LoginHome = () => {
     return (
         <Container className={styles.formularioContainer}>
             <h1 className="text-center">LOGIN</h1>
-            <Formulario botaoCor={"primary"} inputs={inputs} url={"login"} textoBotao={"LOGIN"} tipoFormulario={"login"} />
+            <Formulario botaoCor={"primary"} inputs={inputs} url={"login"} textoBotao={"ENTRAR"} tipoFormulario={"login"} />
             <div className="d-flex gap-2 mt-3">
                 <Button className={styles.fonteBotao12} color="success" onClick={() => nav("/cadastrar")}>CADASTRE-SE</Button>
                 <Button className={styles.fonteBotao12} onClick={() => nav("/verificaremail")}>RECUPEAR SENHA</Button>

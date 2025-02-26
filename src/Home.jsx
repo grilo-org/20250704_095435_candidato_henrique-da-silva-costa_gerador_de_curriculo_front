@@ -15,13 +15,6 @@ const Home = () => {
         estado_civil: "",
         telefone: "",
         data_nascimento: "",
-        data_inicio: "",
-        data_fim: "",
-        empresa: "",
-        habilidades: "",
-        cargo: "",
-        descricao: "",
-        responsabilidades: "",
         usuario_id: usuario.id,
     }
 
@@ -30,7 +23,7 @@ const Home = () => {
             <InfoUsuario />
             <Container>
                 <h1>Cadastrar currículo</h1>
-                <Button className="mt-2" onClick={() => nav("/curriculos")} color="primary">VER CURRICULOS</Button>
+                <Button className="mt-2" onClick={() => nav("/curriculos")} color="primary">VER MEUS CURRÍCULOS</Button>
                 <Formulario textoBotao={"CADASTRAR"} url={"cadastrar/curriculo"} inputs={inputs} tipoFormulario="curriculo" />
             </Container>
         </>

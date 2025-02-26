@@ -4,7 +4,7 @@ import styles from "../stylos.module.css"
 import axios from 'axios';
 import { colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
-const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "" }) => {
+const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = "", tipoFormulario = "", tamanhoBotao = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
@@ -12,53 +12,36 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("EDITAR");
     const [modal, setModal] = useState(false);
 
+    // const pegarDados = () => {
 
-    const pegarDados = () => {
+    //     setModal(!modal)
+    //     setMsg("")
+    //     setErro({})
+    //     setFormulario(inputs);
 
-        setModal(!modal)
-        setMsg("")
-        setErro({})
-        setFormulario(inputs);
+    //     axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
+    //         let ordenado = {
+    //             cargo: res.data.cargo,
+    //             img: res.data.img,
+    //             empresa: res.data.empresa,
+    //             telefone: res.data.telefone,
+    //             habilidades: res.data.habilidades,
+    //             nome: res.data.nome,
+    //             estado_civil: res.data.estado_civil,
+    //             data_fim: res.data.data_fim,
+    //             data_inicio: res.data.data_inicio,
+    //             data_nascimento: res.data.data_nascimento,
+    //             responsabilidades: res.data.responsabilidades,
+    //             descricao: res.data.descricao,
+    //             id: res.data.id,
+    //             usuario_id: res.data.usuario_id,
+    //         }
 
-        axios.get(urlGet).then((res) => {
-            let ordenado = "";
-            if (urlGetLista == "experiencias") {
-                ordenado = {
-                    cargo: res.data.cargo,
-                    empresa: res.data.empresa,
-                    habilidades: res.data.habilidades,
-                    data_fim: res.data.data_fim,
-                    data_inicio: res.data.data_inicio,
-                    responsabilidades: res.data.responsabilidades,
-                    id: res.data.id,
-                    curriculo_id: res.data.curriculo_id
-                }
-            }
-
-            if (urlGetLista == "curriculo") {
-                ordenado = {
-                    cargo: res.data.cargo,
-                    img: res.data.img,
-                    empresa: res.data.empresa,
-                    telefone: res.data.telefone,
-                    habilidades: res.data.habilidades,
-                    nome: res.data.nome,
-                    estado_civil: res.data.estado_civil,
-                    data_fim: res.data.data_fim,
-                    data_inicio: res.data.data_inicio,
-                    data_nascimento: res.data.data_nascimento,
-                    responsabilidades: res.data.responsabilidades,
-                    descricao: res.data.descricao,
-                    id: res.data.id,
-                    usuario_id: res.data.usuario_id,
-                }
-            }
-
-            setFormulario(ordenado);
-        }).catch((err) => {
-            alert("Erro interno no servidor");
-        });
-    }
+    //         setFormulario(ordenado);
+    //     }).catch((err) => {
+    //         alert("Erro interno no servidor");
+    //     });
+    // }
 
     const toggle = () => {
         setModal(!modal)
@@ -117,34 +100,33 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     setModal(true);
                     setMsg(res.data.msg);
                     setDesabilitar(false);
-                    setTextoBotaoCarregando("EDITAR")
+                    setTextoBotaoCarregando("CADASTRAR")
                 }
 
                 setErro(msgerros);
             }
-
 
             if (!res.data.erro) {
                 pegarDadosCarregar();
                 setMsg("");
                 setModal(false)
                 setDesabilitar(false);
-                setTextoBotaoCarregando("EDITAR")
+                setTextoBotaoCarregando("CADASTRAR")
             }
         }).catch((err) => {
             if (err) {
                 setModal(true);
             }
             setDesabilitar(false)
-            setTextoBotaoCarregando("EDITAR")
+            setTextoBotaoCarregando("CADASTRAR")
             setMsg("Erro interno no servidor. Por favor contate o suporte" + err);
         })
     }
 
     return (
         <div>
-            <Button color="success" className={styles.fonteBotao12} size={tamanhoBotao} onClick={pegarDados}>
-                EDITAR
+            <Button color="success" className={styles.fonteBotao12} size={tamanhoBotao} onClick={toggle}>
+                CADASTRAR
             </Button>
             <Modal backdrop={modal ? "static" : true} fullscreen={tamanhoModalFull(tipoFormulario)} isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>EDITAR</ModalHeader>
@@ -156,7 +138,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                                     return (
                                         <div key={index} className={colunas(valor, tipoFormulario)}>
                                             <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
-                                            <Input placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} type={tipoInput(valor)} defaultValue={formulario[valor]} onChange={changeInputs} />
+                                            <Input placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} type={tipoInput(valor)} onChange={changeInputs} />
                                             <p className={styles.erro}>{erro[valor]}</p>
                                         </div>
                                     )
@@ -175,4 +157,4 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
     )
 }
 
-export default Editar
+export default Cadastrar

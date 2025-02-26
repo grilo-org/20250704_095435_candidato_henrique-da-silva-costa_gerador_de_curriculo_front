@@ -1,17 +1,15 @@
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import React, { useEffect } from 'react'
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 import { Button, Container, Table } from 'reactstrap';
-import Editar from '../crud/Editar';
-import Excluir from '../crud/Excluir';
+import moment from 'moment';
 import styles from "../stylos.module.css";
 import Carregando from '../components/Carregando';
-import InfoUsuario from '../components/InfoUsuario';
-import { FaArrowLeft } from 'react-icons/fa';
-import moment from 'moment';
+import Editar from '../crud/Editar';
+import Excluir from '../crud/Excluir';
 
-const Curriculos = () => {
+const CurriculoExperiencias = () => {
     const [dados, setDados] = useState([]);
     const [msg, setMsg] = useState("");
     const [paginaAtual, setPaginaAtual] = useState(1);
@@ -19,37 +17,22 @@ const Curriculos = () => {
     const [botaoDesabilitado, setBotaoDesabilitado] = useState(false);
     const [removerLoading, setRemoverLoading] = useState(false);
     const nav = useNavigate();
-    const [usuario] = useState(sessionStorage.getItem("usuario") ? JSON.parse(sessionStorage.getItem("usuario")) :
-        0);
+    const curriculoId = JSON.parse(localStorage.getItem("curriculoId"));
 
     const inputs = {
-        nome: "",
-        img: "",
-        descricao: "",
-        estado_civil: "",
-        telefone: "",
-        data_nascimento: "",
-        empresa: "",
-        cargo: "",
-        responsabilidades: "",
-        habilidades: "",
         data_inicio: "",
         data_fim: "",
-        usuario_id: usuario.id,
-    }
-
-    const pegarCurriculo = (id) => {
-        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
-            localStorage.setItem("curriculo", JSON.stringify(res.data));
-            window.open('/pdf', '_blank');
-        }).catch((err) => {
-            alert("Erro interno no servidor");
-        });
+        empresa: "",
+        habilidades: "",
+        cargo: "",
+        descricao: "",
+        responsabilidades: "",
+        curriculo_id: curriculoId,
     }
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`http://localhost:1999/curriculo/${usuario.id}`, {
+        axios.get(`http://localhost:1999/experiencias/${curriculoId}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -81,7 +64,6 @@ const Curriculos = () => {
 
     return (
         <>
-            <InfoUsuario />
             <Button color="transparent" onClick={() => nav("/")}><FaArrowLeft size={40} /></Button>
             <Container>
                 <h1>Curriculos</h1>
@@ -90,7 +72,8 @@ const Curriculos = () => {
                     <Table responsive striped size="sm">
                         <thead>
                             <tr>
-                                <th>Titulo</th>
+                                <th>Empresa</th>
+                                <th>Data inicial</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -99,12 +82,13 @@ const Curriculos = () => {
                                 {dados.length > 0 ? dados.map((dado, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{dado.nome ? dado.nome.slice(0, 30) + "..." : "não informado"}</td>
-                                            <td>{moment(dado.criado).format("DD/MM/YYYY")}</td>
+                                            <td>{dado.empresa ? dado.empresa.slice(0, 30) + "..." : "não informado"}</td>
+                                            <td>{moment(dado.data_inicio).format("DD/MM/YYYY")}</td>
+                                            <td>{moment(dado.data_fim).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
-                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
-                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`http://localhost:1999/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
-                                                <Excluir tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
+                                                <Button className={styles.fonteBotao12} size="sm" color="primary">VER EXPERIENCIA</Button>
+                                                <Editar urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`http://localhost:1999/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"editar"} pegarDadosCarregar={pegarDados} />
+                                                <Excluir tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
                                     )
@@ -155,4 +139,4 @@ const Curriculos = () => {
     )
 }
 
-export default Curriculos
+export default CurriculoExperiencias

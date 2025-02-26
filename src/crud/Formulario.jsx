@@ -32,11 +32,13 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
         }).then((res) => {
+            console.log(res.data);
+
             for (const [key, value] of Object.entries(formulario)) {
                 if (value != null && value.length == 0 && key != "img") {
                     msgerros[key] = "Campo obrigatório";
@@ -84,6 +86,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 if (tipoFormulario == "curriculo") {
                     if (!res.data.erro) {
                         localStorage.setItem("curriculo", JSON.stringify(formulario));
+                        localStorage.setItem("curriculoId", res.data.id ? JSON.stringify(res.data.id) : "");
                         nav("/curriculos");
                     }
                 }

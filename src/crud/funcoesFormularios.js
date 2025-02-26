@@ -110,6 +110,10 @@ export const tipoLabel = (tipo, tipoFormulario) => {
         return "";
     }
 
+    if (tipo == "curriculo_id") {
+        return "";
+    }
+
     if (tipoFormulario == "recuperarSenha" && tipo == "emailVerificar") {
         return "";
     }
@@ -137,6 +141,10 @@ export const tipoInput = (tipo, tipoFormulario) => {
     }
 
     if (tipo == "id") {
+        return "hidden";
+    }
+
+    if (tipo == "curriculo_id") {
         return "hidden";
     }
 

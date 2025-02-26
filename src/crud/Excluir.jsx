@@ -10,7 +10,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
     const toggle = () => setModal(!modal);
 
     const deletar = () => {
-        axios.options(`https://henriquedeveloper.com.br/${url}`, { params: { id: id } }, {
+        axios.options(`http://localhost:1999/${url}`, { params: { id: id } }, {
             headers: {
                 "content-type": "application/json"
             }
