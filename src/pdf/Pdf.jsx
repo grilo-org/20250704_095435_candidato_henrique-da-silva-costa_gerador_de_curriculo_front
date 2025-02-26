@@ -71,7 +71,7 @@ const Pdf = () => {
                             <Text style={styles.fs26}>Informações de contato</Text>
                             <Text style={styles.fs20}>Estado civil: {dados.estado_civil}</Text>
                             <Text style={styles.fs20}>Telefone: {dados.telefone}</Text>
-                            <Text style={styles.fs20}>Data de nascimento: {dados.data_nascimento}</Text>
+                            <Text style={styles.fs20}>Data de nascimento: {moment(dados.data_nascimento).format("DD/MM/YYYY")}</Text>
                         </View>
                         <View>
                             <Text style={styles.fs26}>Habilidades</Text>
@@ -87,7 +87,7 @@ const Pdf = () => {
                             <Text style={styles.fs20}>{dados.responsabilidades}</Text>
                             <View>
                                 <Text style={styles.fs26}>Período</Text>
-                                <Text style={styles.fs20}>de {dados.data_inicio} a {dados.data_fim}</Text>
+                                <Text style={styles.fs20}>de {moment(dados.data_inicio).format("DD/MM/YYYY")} a {moment(dados.data_fim).format("DD/MM/YYYY")}</Text>
                             </View>
                         </View>
                     </View>
