@@ -136,7 +136,7 @@ export const tipoInput = (tipo, tipoFormulario) => {
         return "hidden";
     }
 
-    if (tipo == "senha") {
+    if (tipo == "senha" || tipo == "novaSenha" || tipo == "confirmaSenha") {
         return "password";
     }
 
