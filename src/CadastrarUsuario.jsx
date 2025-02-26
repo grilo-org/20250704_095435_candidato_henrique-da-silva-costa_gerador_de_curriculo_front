@@ -11,7 +11,7 @@ const CadastrarUsuario = () => {
     const inputs = {
         img: "",
         nome: "",
-        email: "",
+        emailVerificar: "",
         senha: ""
     }
 
