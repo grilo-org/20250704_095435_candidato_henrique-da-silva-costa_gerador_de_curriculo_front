@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PDFViewer, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
+import { FaUserAlt } from 'react-icons/fa';
 
 const Pdf = () => {
     const [dados, setDados] = useState(localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : {});
@@ -53,14 +54,10 @@ const Pdf = () => {
             <Page style={styles.body}>
                 <View style={styles.titulo}>
                     <View style={styles.imagemDiv}>
-                        {/* <Image style={styles.imagem} src={{
-                            uri: linkImagem,
-                            headers: {
-                                "Cache-Control": "no-cache"
-                            },
-                        }} /> */}
-                        {/* <Image style={styles.imagem} src={{ uri: linkImagem, method: 'GET', headers: [], body: '' }} /> */}
-                        <Image style={styles.imagem} src={linkImagem} />
+                        {
+                            linkImagem.length > 0 ? <Image style={styles.imagem} src={linkImagem} /> :
+                                <FaUserAlt fontSize={50} />
+                        }
                     </View>
                     <View style={styles.descricao}>
                         <Text style={styles.fs30}>{dados.nome}</Text>
