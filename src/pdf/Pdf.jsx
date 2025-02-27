@@ -9,7 +9,7 @@ const Pdf = () => {
     const [experiencias, setExperiencias] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://localhost:1999/experiencias/${dados.id}`).then((res) => {
+        axios.get(`https://henriquedeveloper.com.br//experiencias/${dados.id}`).then((res) => {
             setExperiencias(res.data);
         }).catch((err) => {
             if (err) {

@@ -36,7 +36,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`http://localhost:1999/${url}`, formulario, {
+        axios.post(`https://henriquedeveloper.com.br//${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
