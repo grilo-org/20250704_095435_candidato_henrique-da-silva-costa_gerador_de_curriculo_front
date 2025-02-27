@@ -4,7 +4,7 @@ import LoginHome from '../LoginHome'
 import CadastrarUsuario from '../CadastrarUsuario'
 import Verificaremail from '../pages/Verificaremail'
 import RecuperarSenha from '../pages/RecuperarSenha'
-import NotFound from '../notFound'
+import NotFound from '../NotFound'
 
 const Login = () => {
     return (
