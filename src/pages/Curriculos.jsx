@@ -24,6 +24,7 @@ const Curriculos = () => {
 
     const inputs = {
         nome: "",
+        sexo: "",
         img: "",
         descricao: "",
         estado_civil: "",
@@ -36,6 +37,11 @@ const Curriculos = () => {
         data_inicio: "",
         data_fim: "",
         usuario_id: usuario.id,
+    }
+
+    const verExperiencias = (id) => {
+        localStorage.setItem("curriculoId", id);
+        nav("/experiencias");
     }
 
     const pegarCurriculo = (id) => {
@@ -103,6 +109,7 @@ const Curriculos = () => {
                                             <td>{moment(dado.criado).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
+                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id)}>VER EXPERIENCIAS</Button>
                                                 <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`http://localhost:1999/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
                                                 <Excluir tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>

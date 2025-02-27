@@ -9,42 +9,14 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
     const [desabilitar, setDesabilitar] = useState(false);
-    const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("EDITAR");
+    const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("CADASTRAR");
     const [modal, setModal] = useState(false);
-
-    // const pegarDados = () => {
-
-    //     setModal(!modal)
-    //     setMsg("")
-    //     setErro({})
-    //     setFormulario(inputs);
-
-    //     axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
-    //         let ordenado = {
-    //             cargo: res.data.cargo,
-    //             img: res.data.img,
-    //             empresa: res.data.empresa,
-    //             telefone: res.data.telefone,
-    //             habilidades: res.data.habilidades,
-    //             nome: res.data.nome,
-    //             estado_civil: res.data.estado_civil,
-    //             data_fim: res.data.data_fim,
-    //             data_inicio: res.data.data_inicio,
-    //             data_nascimento: res.data.data_nascimento,
-    //             responsabilidades: res.data.responsabilidades,
-    //             descricao: res.data.descricao,
-    //             id: res.data.id,
-    //             usuario_id: res.data.usuario_id,
-    //         }
-
-    //         setFormulario(ordenado);
-    //     }).catch((err) => {
-    //         alert("Erro interno no servidor");
-    //     });
-    // }
 
     const toggle = () => {
         setModal(!modal)
+        setFormulario(inputs);
+        setErro({});
+        setMsg("");
     }
 
     const changeInputs = (e) => {
@@ -82,6 +54,10 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
                     msgerros[key] = `O campo ${key} dever ter no maximo 255 caracteres`;
                 }
 
+                if (res.data.campo) {
+                    msgerros[res.data.campo] = res.data.msg;
+                }
+
                 if (res.data.campo === "data_nascimento") {
                     msgerros["data_nascimento"] = res.data.msg;
                 }
@@ -90,17 +66,15 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
                     msgerros["data_inicio"] = res.data.msg;
                 }
 
-                if (res.data.campo) {
-                    msgerros[res.data.campo] = res.data.msg;
-                }
-
-                setErro(msgerros);
-
                 if (res.data.erro) {
                     setModal(true);
                     setMsg(res.data.msg);
                     setDesabilitar(false);
                     setTextoBotaoCarregando("CADASTRAR")
+                }
+
+                if (res.data.campo) {
+                    setMsg("");
                 }
 
                 setErro(msgerros);
@@ -128,8 +102,8 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
             <Button color="success" className={styles.fonteBotao12} size={tamanhoBotao} onClick={toggle}>
                 CADASTRAR
             </Button>
-            <Modal backdrop={modal ? "static" : true} fullscreen={tamanhoModalFull(tipoFormulario)} isOpen={modal} toggle={toggle}>
-                <ModalHeader toggle={toggle}>EDITAR</ModalHeader>
+            <Modal backdrop={modal ? "static" : true} size="xl" fullscreen={tamanhoModalFull(tipoFormulario)} isOpen={modal} toggle={toggle}>
+                <ModalHeader toggle={toggle}>CADASTRAR</ModalHeader>
                 <ModalBody>
                     <form onSubmit={enviar}>
                         <FormGroup>

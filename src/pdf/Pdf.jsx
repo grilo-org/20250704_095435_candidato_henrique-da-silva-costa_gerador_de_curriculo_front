@@ -2,9 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { PDFViewer, Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
 import { FaUserAlt } from 'react-icons/fa';
 import moment from 'moment';
+import axios from 'axios';
 
 const Pdf = () => {
     const [dados, setDados] = useState(localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : {});
+    const [experiencias, setExperiencias] = useState([]);
+
+    useEffect(() => {
+        axios.get(`http://localhost:1999/experiencias/${dados.id}`).then((res) => {
+            setExperiencias(res.data);
+        }).catch((err) => {
+            if (err) {
+                alert("dados não encontrados");
+            }
+        })
+    }, []);
 
     const [linkImagem] = useState(dados ? dados.img : "");
 
@@ -16,37 +28,39 @@ const Pdf = () => {
         fs30: {
             fontSize: 30,
         },
-        fs26: {
-            fontSize: 26,
+        fs22: {
+            fontSize: 22,
         },
-        fs20: {
-            fontSize: 20,
+        fs16: {
+            fontSize: 16,
+        },
+        fs14: {
+            fontSize: 14,
         },
         imagem: {
-            maxWidth: "300px",
-            height: "300px",
+            maxWidth: "200px",
+            maxHeight: "200px",
             objectFit: "contain"
         },
         titulo: {
             flexDirection: "column",
-            justifyContent: "center",
-            marginBottom: 8,
+            gap: "1rem",
         },
         imagemDiv: {
-            width: "40%",
+            // width: "40%",
         },
         descricao: {
-            width: "100%",
+            textAlign: "justify",
         },
         conteudo: {
-            flexDirection: "row",
+            flexDirection: "column",
             marginBottom: 8,
         },
         experiencias: {
-            width: "60%",
+            // width: "60%",
         },
         sobre: {
-            width: "40%",
+            // width: "40%",
         },
     });
 
@@ -62,34 +76,43 @@ const Pdf = () => {
                     </View>
                     <View style={styles.descricao}>
                         <Text style={styles.fs30}>{dados.nome}</Text>
-                        <Text style={styles.fs20}>{dados.descricao}</Text>
+                        <Text style={styles.fs14}>{dados.descricao}</Text>
                     </View>
                 </View>
                 <View style={styles.conteudo}>
                     <View style={styles.sobre}>
                         <Text style={styles.fs30}>Dados pessoais</Text>
                         <View>
-                            <Text style={styles.fs26}>Informações de contato</Text>
-                            <Text style={styles.fs20}>Estado civil: {dados.estado_civil}</Text>
-                            <Text style={styles.fs20}>Telefone: {dados.telefone}</Text>
-                            <Text style={styles.fs20}>Data de nascimento: {moment(dados.data_nascimento).format("DD/MM/YYYY")}</Text>
+                            <Text style={styles.fs22}>Informações de contato</Text>
+                            <Text style={styles.fs16}>Estado civil: {dados.estado_civil}</Text>
+                            <Text style={styles.fs16}>Telefone: {dados.telefone}</Text>
+                            <Text style={styles.fs16}>Data de nascimento: {moment(dados.data_nascimento).format("DD/MM/YYYY")}</Text>
                         </View>
                         <View>
-                            <Text style={styles.fs26}>Habilidades</Text>
-                            <Text style={styles.fs20}>{dados.habilidades}</Text>
+                            <Text style={styles.fs22}>Habilidades</Text>
+                            <Text style={styles.fs16}>{dados.habilidades}</Text>
                         </View>
                     </View>
                     <View style={styles.experiencias}>
                         <Text style={styles.fs30}>Experiências</Text>
                         <View>
-                            <Text style={styles.fs26}>Empresa: {dados.empresa}</Text>
-                            <Text style={styles.fs26}>Cargo: {dados.cargo}</Text>
-                            <Text style={styles.fs26}>Responsabilidades</Text>
-                            <Text style={styles.fs20}>{dados.responsabilidades}</Text>
-                            <View>
-                                <Text style={styles.fs26}>Período</Text>
-                                <Text style={styles.fs20}>de {moment(dados.data_inicio).format("DD/MM/YYYY")} a {moment(dados.data_fim).format("DD/MM/YYYY")}</Text>
-                            </View>
+
+                            {experiencias.length > 0 ? experiencias.map((experiencia, i) => {
+                                return (
+                                    <div key={i}>
+                                        <Text>     </Text>
+                                        <Text style={styles.fs22}>Empresa: <Text style={styles.fs16}>{experiencia.empresa}</Text></Text>
+                                        <Text style={styles.fs22}>Cargo: <Text style={styles.fs16}>{experiencia.cargo}</Text></Text>
+                                        <Text style={styles.fs22}>Responsabilidades</Text>
+                                        <Text style={styles.fs16}>{experiencia.responsabilidades}</Text>
+                                        <View>
+                                            <Text style={styles.fs22}>Período</Text>
+                                            <Text style={styles.fs16}>de {moment(experiencia.data_inicio).format("DD/MM/YYYY")} a {experiencia.data_fim ? moment(experiencia.data_fim).format("DD/MM/YYYY") : "não informado"}</Text>
+                                        </View>
+                                    </div>
+                                )
+                            }) : ""}
+
                         </View>
                     </View>
                 </View>

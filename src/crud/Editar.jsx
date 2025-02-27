@@ -27,8 +27,8 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     cargo: res.data.cargo,
                     empresa: res.data.empresa,
                     habilidades: res.data.habilidades,
-                    data_fim: res.data.data_fim,
                     data_inicio: res.data.data_inicio,
+                    data_fim: res.data.data_fim,
                     responsabilidades: res.data.responsabilidades,
                     id: res.data.id,
                     curriculo_id: res.data.curriculo_id
@@ -37,17 +37,12 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
 
             if (urlGetLista == "curriculo") {
                 ordenado = {
-                    cargo: res.data.cargo,
                     img: res.data.img,
-                    empresa: res.data.empresa,
                     telefone: res.data.telefone,
-                    habilidades: res.data.habilidades,
                     nome: res.data.nome,
+                    sexo: res.data.sexo,
                     estado_civil: res.data.estado_civil,
-                    data_fim: res.data.data_fim,
-                    data_inicio: res.data.data_inicio,
                     data_nascimento: res.data.data_nascimento,
-                    responsabilidades: res.data.responsabilidades,
                     descricao: res.data.descricao,
                     id: res.data.id,
                     usuario_id: res.data.usuario_id,
@@ -111,13 +106,16 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     msgerros[res.data.campo] = res.data.msg;
                 }
 
-                setErro(msgerros);
-
                 if (res.data.erro) {
                     setModal(true);
                     setMsg(res.data.msg);
                     setDesabilitar(false);
                     setTextoBotaoCarregando("EDITAR")
+                }
+
+
+                if (res.data.campo) {
+                    setMsg("");
                 }
 
                 setErro(msgerros);
@@ -141,6 +139,22 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         })
     }
 
+
+    const formatoDeInput = (tipo) => {
+        if (tipo == "sexo") {
+            return <select name={tipo} disabled={desabilitar} onChange={(e) => formulario.sexo = e.target.value} className="form-control" defaultValue={formulario[tipo]} value={formulario.tipo} >
+                <option value={""}>Selecione...</option>
+                <option value={"masculino"}>MASCULINO</option>
+                <option value={"feminino"}>FEMININO</option>
+                <option value={"outro"}>OUTRO</option>
+            </select>
+        }
+
+        return <>
+            <Input placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo)} defaultValue={formulario[tipo]} onChange={changeInputs} />
+        </>
+    }
+
     return (
         <div>
             <Button color="success" className={styles.fonteBotao12} size={tamanhoBotao} onClick={pegarDados}>
@@ -156,7 +170,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                                     return (
                                         <div key={index} className={colunas(valor, tipoFormulario)}>
                                             <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
-                                            <Input placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} type={tipoInput(valor)} defaultValue={formulario[valor]} onChange={changeInputs} />
+                                            {formatoDeInput(valor)}
                                             <p className={styles.erro}>{erro[valor]}</p>
                                         </div>
                                     )

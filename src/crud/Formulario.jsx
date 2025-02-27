@@ -37,7 +37,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 "Content-Type": "multipart/form-data",
             },
         }).then((res) => {
-            console.log(res.data);
+            console.log(formulario);
 
             for (const [key, value] of Object.entries(formulario)) {
                 if (value != null && value.length == 0 && key != "img") {
@@ -48,7 +48,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                     msgerros[key] = `O campo ${key} dever ter no maximo 10 caracteres`;
                 }
 
-                if (value != null && value.length > 255) {
+                if (value != null && value.length > 255 && key != "descricao") {
                     msgerros[key] = `O campo ${key} dever ter no maximo 255 caracteres`;
                 }
 
@@ -87,7 +87,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                     if (!res.data.erro) {
                         localStorage.setItem("curriculo", JSON.stringify(formulario));
                         localStorage.setItem("curriculoId", res.data.id ? JSON.stringify(res.data.id) : "");
-                        nav("/curriculos");
+                        nav("/experiencias");
                     }
                 }
 
@@ -105,6 +105,10 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                         localStorage.setItem("emailVerificar", "");
                         nav("/")
                     }
+                }
+
+                if (res.data.campo) {
+                    setMsg("");
                 }
 
                 setErro(msgerros);
@@ -135,6 +139,24 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
         })
     }
 
+
+
+    const formatoDeInput = (tipo) => {
+        if (tipo == "sexo") {
+            return <select name={tipo} disabled={desabilitar} onChange={(e) => formulario.sexo = e.target.value} className="form-control" value={formulario.tipo} >
+                <option value={""}>Selecione...</option>
+                <option value={"masculino"}>MASCULINO</option>
+                <option value={"feminino"}>FEMININO</option>
+                <option value={"outro"}>OUTRO</option>
+            </select>
+        }
+
+        return <>
+            <Input type={tipoInput(tipo, tipoFormulario)} placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} onChange={changeInputs} />
+            <p className={styles.erro}>{erro[tipo]}</p>
+        </>
+    }
+
     return (
         <div>
             <form onSubmit={enviar}>
@@ -144,8 +166,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                             return (
                                 <div key={index} className={colunas(valor, tipoFormulario)}>
                                     <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
-                                    <Input type={tipoInput(valor, tipoFormulario)} placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} onChange={changeInputs} />
-                                    <p className={styles.erro}>{erro[valor]}</p>
+                                    {formatoDeInput(valor)}
                                 </div>
                             )
                         }) : ""}

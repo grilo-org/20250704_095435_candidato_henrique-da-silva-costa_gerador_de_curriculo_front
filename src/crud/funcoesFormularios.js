@@ -168,23 +168,40 @@ export const tipoInput = (tipo, tipoFormulario) => {
 export const colunas = (tipo, tipoFormulario) => {
 
     if (tipoFormulario == "curriculo") {
-        let col3 = ["nome", "img", "telefone", "estado_civil", "data_nascimento", "empresa", "data_inicio", "data_fim"];
-        let col6 = ["habilidades", "cargo", "descricao", "responsabilidades"];
-
-        if (col6.includes(tipo)) {
-            return "col-md-6";
-        }
+        let col3 = ["nome", "sexo", "img", "telefone", "estado_civil", "data_nascimento"];
+        let col6 = ["descricao"];
 
         if (col3.includes(tipo)) {
             return "col-md-3";
         }
+
+        if (col6.includes(tipo)) {
+            return "col-md-6";
+        }
     }
 
     if (tipoFormulario == "editar") {
-        let col6 = ["responsabilidades", "descricao"];
+        let col6 = ["habilidades", "cargo", "responsabilidades", "descricao", "empresa"];
         let col3 = ["data_nascimento", "data_inicio", "data_fim", "estado_civil"];
-        let col4 = ["habilidades", "cargo", "empresa", "img", "nome", "telefone"];
+        let col4 = ["img", "nome", "telefone"];
 
+        if (col3.includes(tipo)) {
+            return "col-md-3";
+        }
+
+        if (col4.includes(tipo)) {
+            return "col-md-4";
+        }
+
+        if (col6.includes(tipo)) {
+            return "col-md-6";
+        }
+    }
+
+    if (tipoFormulario == "experiencias") {
+        let col6 = ["habilidades", "cargo", "responsabilidades", "descricao", "empresa"];
+        let col3 = ["data_nascimento", "data_inicio", "data_fim", "estado_civil"];
+        let col4 = ["img", "nome", "telefone"];
 
         if (col3.includes(tipo)) {
             return "col-md-3";

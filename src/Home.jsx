@@ -2,7 +2,6 @@ import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container } from 'reactstrap';
 import Formulario from './crud/Formulario';
-import { Usuario } from './contexts/Usuario';
 import { useNavigate } from 'react-router-dom';
 import InfoUsuario from './components/InfoUsuario';
 const Home = () => {
@@ -11,10 +10,12 @@ const Home = () => {
 
     const inputs = {
         nome: "",
+        sexo: "",
         img: "",
         estado_civil: "",
         telefone: "",
         data_nascimento: "",
+        descricao: "",
         usuario_id: usuario.id,
     }
 

@@ -8,6 +8,8 @@ import styles from "../stylos.module.css";
 import Carregando from '../components/Carregando';
 import Editar from '../crud/Editar';
 import Excluir from '../crud/Excluir';
+import Cadastrar from '../crud/Cadastrar';
+import ModalExperiencias from '../components/ModalExperiencias';
 
 const CurriculoExperiencias = () => {
     const [dados, setDados] = useState([]);
@@ -17,7 +19,7 @@ const CurriculoExperiencias = () => {
     const [botaoDesabilitado, setBotaoDesabilitado] = useState(false);
     const [removerLoading, setRemoverLoading] = useState(false);
     const nav = useNavigate();
-    const curriculoId = JSON.parse(localStorage.getItem("curriculoId"));
+    const curriculoId = localStorage.getItem("curriculoId") ? JSON.parse(localStorage.getItem("curriculoId")) : "";
 
     const inputs = {
         data_inicio: "",
@@ -25,14 +27,22 @@ const CurriculoExperiencias = () => {
         empresa: "",
         habilidades: "",
         cargo: "",
-        descricao: "",
         responsabilidades: "",
         curriculo_id: curriculoId,
     }
 
+    const pegarCurriculo = (id) => {
+        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
+            localStorage.setItem("curriculo", JSON.stringify(res.data));
+            window.open('/pdf', '_blank');
+        }).catch((err) => {
+            alert("Erro interno no servidor");
+        });
+    }
+
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`http://localhost:1999/experiencias/${curriculoId}`, {
+        axios.get(`http://localhost:1999/experienciaspaginacao/${curriculoId}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -50,6 +60,13 @@ const CurriculoExperiencias = () => {
     }
 
     useEffect(() => {
+        if (!curriculoId) {
+            nav("/");
+            console.log("euu")
+        }
+
+        console.log(curriculoId);
+
         setTimeout(() => {
             pegarDados(paginaAtual);
         }, 1000);
@@ -64,10 +81,13 @@ const CurriculoExperiencias = () => {
 
     return (
         <>
-            <Button color="transparent" onClick={() => nav("/")}><FaArrowLeft size={40} /></Button>
+            <Button color="transparent" onClick={() => nav("/curriculos")}><FaArrowLeft size={40} /></Button>
             <Container>
-                <h1>Curriculos</h1>
-
+                <h1>Experiências</h1>
+                <div className="text-end d-flex gap-2 justify-content-end">
+                    <Cadastrar tamanhoBotao={"sm"} tipoFormulario={"experiencias"} inputs={inputs} url={"cadastrar/experiencia"} pegarDadosCarregar={pegarDados} />
+                    <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(curriculoId)}>VER CURRICULO</Button>
+                </div>
                 {dados.length > 0 ?
                     <Table responsive striped size="sm">
                         <thead>
@@ -82,11 +102,11 @@ const CurriculoExperiencias = () => {
                                 {dados.length > 0 ? dados.map((dado, index) => {
                                     return (
                                         <tr key={index}>
-                                            <td>{dado.empresa ? dado.empresa.slice(0, 30) + "..." : "não informado"}</td>
+                                            <td>{dado.empresa.length ? dado.empresa.slice(0, 30) + "..." : "não informado"}</td>
                                             <td>{moment(dado.data_inicio).format("DD/MM/YYYY")}</td>
                                             <td>{moment(dado.data_fim).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
-                                                <Button className={styles.fonteBotao12} size="sm" color="primary">VER EXPERIENCIA</Button>
+                                                <ModalExperiencias id={dado.id} />
                                                 <Editar urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`http://localhost:1999/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"editar"} pegarDadosCarregar={pegarDados} />
                                                 <Excluir tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>

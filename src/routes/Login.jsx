@@ -4,6 +4,7 @@ import LoginHome from '../LoginHome'
 import CadastrarUsuario from '../CadastrarUsuario'
 import Verificaremail from '../pages/Verificaremail'
 import RecuperarSenha from '../pages/RecuperarSenha'
+import NotFound from '../notFound'
 
 const Login = () => {
     return (
@@ -14,6 +15,7 @@ const Login = () => {
                     <Route path="/cadastrar" element={<CadastrarUsuario />} />
                     <Route path="/verificaremail" element={<Verificaremail />} />
                     <Route path="/recuperarSenha" element={<RecuperarSenha />} />
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </BrowserRouter>
         </>
