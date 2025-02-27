@@ -76,7 +76,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br//${url}`, formulario, {
+        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },

@@ -32,7 +32,7 @@ const CurriculoExperiencias = () => {
     }
 
     const pegarCurriculo = (id) => {
-        axios.get(`https://henriquedeveloper.com.br//curriculoid/${id}`).then((res) => {
+        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
             localStorage.setItem("curriculo", JSON.stringify(res.data));
             window.open('/pdf', '_blank');
         }).catch((err) => {
@@ -42,7 +42,7 @@ const CurriculoExperiencias = () => {
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`https://henriquedeveloper.com.br//experienciaspaginacao/${curriculoId}`, {
+        axios.get(`https://henriquedeveloper.com.br/experienciaspaginacao/${curriculoId}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -107,7 +107,7 @@ const CurriculoExperiencias = () => {
                                             <td>{moment(dado.data_fim).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <ModalExperiencias id={dado.id} />
-                                                <Editar urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br//experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"editar"} pegarDadosCarregar={pegarDados} />
+                                                <Editar urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"editar"} pegarDadosCarregar={pegarDados} />
                                                 <Excluir tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>

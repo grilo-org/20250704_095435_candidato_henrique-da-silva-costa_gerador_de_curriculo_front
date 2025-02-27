@@ -45,7 +45,7 @@ const Curriculos = () => {
     }
 
     const pegarCurriculo = (id) => {
-        axios.get(`https://henriquedeveloper.com.br//curriculoid/${id}`).then((res) => {
+        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
             localStorage.setItem("curriculo", JSON.stringify(res.data));
             window.open('/pdf', '_blank');
         }).catch((err) => {
@@ -55,7 +55,7 @@ const Curriculos = () => {
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`https://henriquedeveloper.com.br//curriculo/${usuario.id}`, {
+        axios.get(`https://henriquedeveloper.com.br/curriculo/${usuario.id}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -110,7 +110,7 @@ const Curriculos = () => {
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
                                                 <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id)}>VER EXPERIENCIAS</Button>
-                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br//curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
+                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
                                                 <Excluir tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
