@@ -4,7 +4,7 @@ import Home from '../Home'
 import Curriculos from '../pages/Curriculos'
 import Pdf from '../pdf/Pdf'
 import CurriculoExperiencias from '../pages/CurriculoExperiencias'
-import NotFound from '../notFound'
+import NotFound from '../NotFound'
 
 const Paginas = () => {
     return (
