@@ -84,7 +84,7 @@ const CurriculoExperiencias = () => {
             <Container>
                 <h1>Adicionar experiências</h1>
                 <div className="text-end d-flex gap-2 justify-content-end">
-                    <Button color="seoncdary" onClick={() => nav("/curriculos")}>VER CURRÍCULOS</Button>
+                    <Button color="secondary" size="sm" onClick={() => nav("/curriculos")}>VER CURRÍCULOS</Button>
                     <Cadastrar tamanhoBotao={"sm"} tipoFormulario={"experiencias"} inputs={inputs} url={"cadastrar/experiencia"} pegarDadosCarregar={pegarDados} />
                     <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(curriculoId)}>VER CURRICULO</Button>
                 </div>
