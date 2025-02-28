@@ -84,6 +84,7 @@ const Pdf = () => {
                         <Text style={styles.fs30}>Dados pessoais</Text>
                         <View>
                             <Text style={styles.fs22}>Informações de contato</Text>
+                            <Text style={styles.fs16}>Sexo: {dados.sexo}</Text>
                             <Text style={styles.fs16}>Estado civil: {dados.estado_civil}</Text>
                             <Text style={styles.fs16}>Telefone: {dados.telefone}</Text>
                             <Text style={styles.fs16}>Data de nascimento: {moment(dados.data_nascimento).format("DD/MM/YYYY")}</Text>
