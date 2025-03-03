@@ -145,7 +145,7 @@ export const tipoInput = (tipo, tipoFormulario) => {
         return "hidden";
     }
 
-    if (tipoData.includes(tipo) && tipoFormulario != "experiencias") {
+    if (tipoData.includes(tipo)) {
         return "date";
     }
 
