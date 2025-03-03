@@ -32,7 +32,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -143,12 +143,15 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
 
     const formatoDeInput = (tipo) => {
         if (tipo == "sexo") {
-            return <select name={tipo} disabled={desabilitar} onChange={(e) => formulario.sexo = e.target.value} className="form-control" value={formulario.tipo} >
-                <option value={""}>Selecione...</option>
-                <option value={"masculino"}>MASCULINO</option>
-                <option value={"feminino"}>FEMININO</option>
-                <option value={"outro"}>OUTRO</option>
-            </select>
+            return <>
+                <select name={tipo} disabled={desabilitar} onChange={(e) => formulario.sexo = e.target.value} className="form-control" value={formulario.tipo} >
+                    <option value={""}>Selecione...</option>
+                    <option value={"masculino"}>MASCULINO</option>
+                    <option value={"feminino"}>FEMININO</option>
+                    <option value={"outro"}>OUTRO</option>
+                </select>
+                <p className={styles.erro}>{erro[tipo]}</p>
+            </>
         }
 
         return <>

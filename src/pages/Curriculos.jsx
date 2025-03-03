@@ -45,7 +45,7 @@ const Curriculos = () => {
     }
 
     const pegarCurriculo = (id) => {
-        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
+        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
             localStorage.setItem("curriculo", JSON.stringify(res.data));
             window.open('/pdf', '_blank');
         }).catch((err) => {
@@ -55,7 +55,7 @@ const Curriculos = () => {
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`https://henriquedeveloper.com.br/curriculo/${usuario.id}`, {
+        axios.get(`http://localhost:1999/curriculo/${usuario.id}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -88,10 +88,9 @@ const Curriculos = () => {
     return (
         <>
             <InfoUsuario />
-            <Button color="transparent" onClick={() => nav("/")}><FaArrowLeft size={40} /></Button>
             <Container>
-                <h1>Curriculos</h1>
-
+                <h1>Currículos</h1>
+                <Button color="success" onClick={() => nav("/")}>CADASTRAR CURRÍCULO</Button>
                 {dados.length > 0 ?
                     <Table responsive striped size="sm">
                         <thead>
@@ -108,9 +107,9 @@ const Curriculos = () => {
                                             <td>{dado.nome ? dado.nome.slice(0, 30) + "..." : "não informado"}</td>
                                             <td>{moment(dado.criado).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
-                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(dado.id)}>VER CURRICULO</Button>
-                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id)}>VER EXPERIENCIAS</Button>
-                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
+                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id)}>VER EXPERIÊNCIAS</Button>
+                                                <Button className={styles.fonteBotao12} size="sm" color="secondary" onClick={() => pegarCurriculo(dado.id)}>VER CURRÍCULO</Button>
+                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`http://localhost:1999/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
                                                 <Excluir tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>

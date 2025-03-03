@@ -1,4 +1,9 @@
-export const tipoPlaceholder = (tipo) => {
+export const tipoPlaceholder = (tipo, tipoFormulario) => {
+
+    if (tipo == "data_nascimento" && tipoFormulario == "experiencias" || tipoFormulario == "editarExperiencias") {
+        return "";
+    }
+
     if (tipo == "nome") {
         return "Informe o nome";
     }
@@ -66,6 +71,14 @@ export const tipoPlaceholder = (tipo) => {
 }
 
 export const tipoLabel = (tipo, tipoFormulario) => {
+    if (tipo == "data_nascimento" && tipoFormulario == "experiencias") {
+        return "";
+    }
+
+    if (tipo == "data_nascimento" && tipoFormulario == "editarExperiencias") {
+        return "";
+    }
+
     if (tipo === "usuario_id") {
         return "";
     }
@@ -128,7 +141,11 @@ export const tipoLabel = (tipo, tipoFormulario) => {
 export const tipoInput = (tipo, tipoFormulario) => {
     const tipoData = ["data_inicio", "data_fim", "data_nascimento"];
 
-    if (tipoData.includes(tipo)) {
+    if (tipoFormulario == "experiencias" && tipo == "data_nascimento") {
+        return "hidden";
+    }
+
+    if (tipoData.includes(tipo) && tipoFormulario != "experiencias") {
         return "date";
     }
 
@@ -166,6 +183,16 @@ export const tipoInput = (tipo, tipoFormulario) => {
 }
 
 export const colunas = (tipo, tipoFormulario) => {
+
+    const tiposHidden = ["id", "usuario_id", "curriculo_id"];
+
+    if (tiposHidden.includes(tipo)) {
+        return "d-none";
+    }
+
+    if (tipo == "data_nascimento" && tipoFormulario == "experiencias") {
+        return "d-none";
+    }
 
     if (tipoFormulario == "curriculo") {
         let col3 = ["nome", "sexo", "img", "telefone", "estado_civil", "data_nascimento"];

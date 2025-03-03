@@ -1,5 +1,4 @@
-import axios from 'axios';
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Container } from 'reactstrap';
 import Formulario from './crud/Formulario';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +22,7 @@ const Home = () => {
         <>
             <InfoUsuario />
             <Container>
-                <h1>Cadastrar currículo</h1>
+                <h1>Cadastrar informações pessoais</h1>
                 <Button className="mt-2" onClick={() => nav("/curriculos")} color="primary">VER MEUS CURRÍCULOS</Button>
                 <Formulario textoBotao={"CADASTRAR"} url={"cadastrar/curriculo"} inputs={inputs} tipoFormulario="curriculo" />
             </Container>

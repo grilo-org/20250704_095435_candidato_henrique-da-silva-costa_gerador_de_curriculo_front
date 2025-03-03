@@ -36,7 +36,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -112,7 +112,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
                                     return (
                                         <div key={index} className={colunas(valor, tipoFormulario)}>
                                             <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
-                                            <Input placeholder={tipoPlaceholder(valor)} disabled={desabilitar} name={valor} type={tipoInput(valor)} onChange={changeInputs} />
+                                            <Input placeholder={tipoPlaceholder(valor, tipoFormulario)} disabled={desabilitar} name={valor} type={tipoInput(valor, tipoFormulario)} onChange={changeInputs} />
                                             <p className={styles.erro}>{erro[valor]}</p>
                                         </div>
                                     )

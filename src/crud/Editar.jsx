@@ -4,7 +4,7 @@ import styles from "../stylos.module.css"
 import axios from 'axios';
 import { colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
-const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "" }) => {
+const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "", data_nascimento, tamanhoModal = "md" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
@@ -31,7 +31,8 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     data_fim: res.data.data_fim,
                     responsabilidades: res.data.responsabilidades,
                     id: res.data.id,
-                    curriculo_id: res.data.curriculo_id
+                    curriculo_id: res.data.curriculo_id,
+                    data_nascimento: data_nascimento == "" ? res.data.sdata_nascimento : data_nascimento,
                 }
             }
 
@@ -76,7 +77,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         setDesabilitar(true);
         setTextoBotaoCarregando("CAREGANDO...")
 
-        axios.post(`https://henriquedeveloper.com.br/${url}`, formulario, {
+        axios.post(`http://localhost:1999/${url}`, formulario, {
             headers: {
                 "Content-Type": "multipart/form-data",
             },
@@ -142,16 +143,19 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
 
     const formatoDeInput = (tipo) => {
         if (tipo == "sexo") {
-            return <select name={tipo} disabled={desabilitar} onChange={(e) => formulario.sexo = e.target.value} className="form-control" defaultValue={formulario[tipo]} value={formulario.tipo} >
-                <option value={""}>Selecione...</option>
-                <option value={"masculino"}>MASCULINO</option>
-                <option value={"feminino"}>FEMININO</option>
-                <option value={"outro"}>OUTRO</option>
-            </select>
+            return <>
+                <select name={tipo} disabled={desabilitar} onChange={(e) => formulario.sexo = e.target.value} className="form-control" defaultValue={formulario[tipo]} value={formulario.tipo} >
+                    <option value={""}>Selecione...</option>
+                    <option value={"masculino"}>MASCULINO</option>
+                    <option value={"feminino"}>FEMININO</option>
+                    <option value={"outro"}>OUTRO</option>
+                </select>
+                <p className={styles.erro}>{erro[tipo]}</p>
+            </>
         }
 
         return <>
-            <Input placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo)} defaultValue={formulario[tipo]} onChange={changeInputs} />
+            <Input placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo, tipoFormulario)} defaultValue={formulario[tipo]} onChange={changeInputs} />
         </>
     }
 
@@ -160,7 +164,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
             <Button color="success" className={styles.fonteBotao12} size={tamanhoBotao} onClick={pegarDados}>
                 EDITAR
             </Button>
-            <Modal backdrop={modal ? "static" : true} fullscreen={tamanhoModalFull(tipoFormulario)} isOpen={modal} toggle={toggle}>
+            <Modal backdrop={modal ? "static" : true} size={tamanhoModal} fullscreen={tamanhoModalFull(tipoFormulario)} isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>EDITAR</ModalHeader>
                 <ModalBody>
                     <form onSubmit={enviar}>

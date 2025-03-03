@@ -20,6 +20,7 @@ const CurriculoExperiencias = () => {
     const [removerLoading, setRemoverLoading] = useState(false);
     const nav = useNavigate();
     const curriculoId = localStorage.getItem("curriculoId") ? JSON.parse(localStorage.getItem("curriculoId")) : "";
+    const curriculo = localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : "";
 
     const inputs = {
         data_inicio: "",
@@ -29,10 +30,11 @@ const CurriculoExperiencias = () => {
         cargo: "",
         responsabilidades: "",
         curriculo_id: curriculoId,
+        data_nascimento: curriculo.data_nascimento ? curriculo.data_nascimento : "",
     }
 
     const pegarCurriculo = (id) => {
-        axios.get(`https://henriquedeveloper.com.br/curriculoid/${id}`).then((res) => {
+        axios.get(`http://localhost:1999/curriculoid/${id}`).then((res) => {
             localStorage.setItem("curriculo", JSON.stringify(res.data));
             window.open('/pdf', '_blank');
         }).catch((err) => {
@@ -42,7 +44,7 @@ const CurriculoExperiencias = () => {
 
     const pegarDados = (page) => {
         setBotaoDesabilitado(true)
-        axios.get(`https://henriquedeveloper.com.br/experienciaspaginacao/${curriculoId}`, {
+        axios.get(`http://localhost:1999/experienciaspaginacao/${curriculoId}`, {
             params: {
                 "id": sessionStorage.getItem("usuarioId"),
                 "pagina": page
@@ -83,10 +85,10 @@ const CurriculoExperiencias = () => {
         <>
             <Container>
                 <h1>Adicionar experiências</h1>
-                <div className="text-end d-flex gap-2 justify-content-end">
+                <div className="text-end d-flex gap-2 justify-content-end mb-3">
                     <Cadastrar tamanhoBotao={"sm"} tipoFormulario={"experiencias"} inputs={inputs} url={"cadastrar/experiencia"} pegarDadosCarregar={pegarDados} />
-                    <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(curriculoId)}>VER CURRICULO</Button>
                     <Button color="secondary" size="sm" onClick={() => nav("/curriculos")}>VER CURRÍCULOS</Button>
+                    <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(curriculoId)}>VER CURRÍCULO</Button>
                 </div>
                 {dados.length > 0 ?
                     <Table responsive striped size="sm">
@@ -94,6 +96,7 @@ const CurriculoExperiencias = () => {
                             <tr>
                                 <th>Empresa</th>
                                 <th>Data inicial</th>
+                                <th>Data final</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -107,7 +110,7 @@ const CurriculoExperiencias = () => {
                                             <td>{moment(dado.data_fim).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <ModalExperiencias id={dado.id} />
-                                                <Editar urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"editar"} pegarDadosCarregar={pegarDados} />
+                                                <Editar tamanhoModal={"xl"} data_nascimento={curriculo.data_nascimento} urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`http://localhost:1999/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"experiencias"} pegarDadosCarregar={pegarDados} />
                                                 <Excluir tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
