@@ -9,7 +9,7 @@ const ModalExperiencias = ({ id = "" }) => {
 
     const toggle = () => {
         setModal(!modal);
-        axios.get(`http://localhost:1999/experiencia/${id}`).then((res) => {
+        axios.get(`https://henriquedeveloper.com.br/experiencia/${id}`).then((res) => {
             setDados(res.data);
         }).catch((err) => {
             if (err) {
