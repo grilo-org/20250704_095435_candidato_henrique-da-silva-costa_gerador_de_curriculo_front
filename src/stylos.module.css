@@ -6,6 +6,10 @@
   color: red;
 }
 
+.sucesso {
+  color: green;
+}
+
 .loading {
   height: 100%;
   width: 100%;

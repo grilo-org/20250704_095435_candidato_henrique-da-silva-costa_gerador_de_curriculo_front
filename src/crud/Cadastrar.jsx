@@ -8,6 +8,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
+    const [msgCor, setMsgCor] = useState("");
     const [desabilitar, setDesabilitar] = useState(false);
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("CADASTRAR");
     const [modal, setModal] = useState(false);
@@ -68,6 +69,7 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
 
                 if (res.data.erro) {
                     setModal(true);
+                    setMsgCor(styles.erro);
                     setMsg(res.data.msg);
                     setDesabilitar(false);
                     setTextoBotaoCarregando("CADASTRAR")
@@ -82,9 +84,12 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
 
             if (!res.data.erro) {
                 pegarDadosCarregar();
-                setMsg("");
-                setModal(false)
-                setDesabilitar(false);
+                setMsgCor(styles.sucesso);
+                setMsg("Cadastro realizado com sucesso");
+                setTimeout(() => {
+                    setModal(false)
+                    setDesabilitar(false);
+                }, 1200);
                 setTextoBotaoCarregando("CADASTRAR")
             }
         }).catch((err) => {
@@ -112,14 +117,14 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
                                     return (
                                         <div key={index} className={colunas(valor, tipoFormulario)}>
                                             <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
-                                            <Input placeholder={tipoPlaceholder(valor, tipoFormulario)} disabled={desabilitar} name={valor} type={tipoInput(valor, tipoFormulario)} onChange={changeInputs} />
+                                            <Input className="form-control" placeholder={tipoPlaceholder(valor, tipoFormulario)} disabled={desabilitar} name={valor} type={tipoInput(valor, tipoFormulario)} onChange={changeInputs} />
                                             <p className={styles.erro}>{erro[valor]}</p>
                                         </div>
                                     )
                                 }) : ""}
                             </div>
                         </FormGroup>
-                        <span className={styles.erro}>{msg}</span>
+                        <span className={msgCor}>{msg}</span>
                         <div className="d-flex gap-2 justify-content-end">
                             <Button color="danger" disabled={desabilitar} onClick={() => setModal(false)}>FECHAR</Button>
                             <Button color="success" disabled={desabilitar}>{textoBotaoCarregando}</Button>

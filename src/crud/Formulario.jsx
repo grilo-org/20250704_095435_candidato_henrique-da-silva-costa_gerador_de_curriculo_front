@@ -5,11 +5,13 @@ import axios from 'axios';
 import { Usuario } from '../contexts/Usuario';
 import { useNavigate } from 'react-router-dom';
 import { colunas, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
+import InputMask from "react-input-mask";
 
 const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "", botaoCor = "success", tamanhoBotao = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
+    const [msgCor, setMsgCor] = useState("");
     const [desabilitar, setDesabilitar] = useState(false);
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState(textoBotao);
     const { setAuth } = useContext(Usuario);
@@ -79,22 +81,28 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
 
                 if (tipoFormulario == "cadastrarUsuario") {
                     if (!res.data.erro) {
-                        nav("/");
+                        setTimeout(() => {
+                            nav("/");
+                        }, 1200);
                     }
                 }
 
                 if (tipoFormulario == "curriculo") {
                     if (!res.data.erro) {
-                        localStorage.setItem("curriculo", JSON.stringify(formulario));
-                        localStorage.setItem("curriculoId", res.data.id ? JSON.stringify(res.data.id) : "");
-                        nav("/experiencias");
+                        setTimeout(() => {
+                            localStorage.setItem("curriculo", JSON.stringify(formulario));
+                            localStorage.setItem("curriculoId", res.data.id ? JSON.stringify(res.data.id) : "");
+                            nav("/experiencias");
+                        }, 1200);
                     }
                 }
 
                 if (tipoFormulario == "verificarEmail") {
                     if (!res.data.erro) {
-                        localStorage.setItem("emailVerificar", JSON.stringify(formulario.emailVerificar));
-                        nav("/recuperarsenha")
+                        setTimeout(() => {
+                            localStorage.setItem("emailVerificar", JSON.stringify(formulario.emailVerificar));
+                            nav("/recuperarsenha")
+                        }, 1200);
                     } else {
                         localStorage.setItem("emailVerificar", "");
                     }
@@ -102,8 +110,10 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
 
                 if (tipoFormulario == "recuperarSenha") {
                     if (!res.data.erro) {
-                        localStorage.setItem("emailVerificar", "");
-                        nav("/")
+                        setTimeout(() => {
+                            localStorage.setItem("emailVerificar", "");
+                            nav("/")
+                        }, 1200);
                     }
                 }
 
@@ -114,6 +124,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 setErro(msgerros);
 
                 if (res.data.erro) {
+                    setMsgCor(styles.erro)
                     setMsg(!res.data.campo ? res.data.msg : "");
                     setDesabilitar(false);
                     setTextoBotaoCarregando(textoBotaoCarregando)
@@ -125,7 +136,8 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
 
             if (!res.data.erro) {
                 pegarDadosCarregar();
-                setMsg("");
+                setMsgCor(styles.sucesso)
+                setMsg("Cadastro realizado com sucesso");
                 setDesabilitar(false);
                 setTextoBotaoCarregando(textoBotaoCarregando)
             }
@@ -154,6 +166,13 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
             </>
         }
 
+        if (tipo == "telefone") {
+            return <>
+                <InputMask mask="(99) 99999-9999" className="form-control" type={tipoInput(tipo, tipoFormulario)} placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} onChange={changeInputs} />
+                <p className={styles.erro}>{erro[tipo]}</p>
+            </>
+        }
+
         return <>
             <Input type={tipoInput(tipo, tipoFormulario)} placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} onChange={changeInputs} />
             <p className={styles.erro}>{erro[tipo]}</p>
@@ -175,7 +194,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                         }) : ""}
                     </div>
                 </FormGroup>
-                <span className={styles.erro}>{msg}</span>
+                <span className={msgCor}>{msg}</span>
                 <div className="d-flex gap-2 justify-content-end">
                     <Button color={botaoCor} className={styles.fonteBotao12} size={tamanhoBotao} disabled={desabilitar}>{textoBotaoCarregando}</Button>
                 </div>

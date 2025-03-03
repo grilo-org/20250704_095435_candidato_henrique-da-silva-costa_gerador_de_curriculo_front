@@ -6,8 +6,14 @@ import styles from "../stylos.module.css"
 const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "", tamanhoBotao = "" }) => {
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
+    const [msgCor, setMsgCor] = useState("");
+    const [desabilitar, setDesabilitar] = useState(false);
 
-    const toggle = () => setModal(!modal);
+    const toggle = () => {
+        setMsgCor("")
+        setMsg("")
+        setModal(!modal)
+    };
 
     const deletar = () => {
         axios.options(`https://henriquedeveloper.com.br/${url}`, { params: { id: id } }, {
@@ -15,16 +21,25 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
                 "content-type": "application/json"
             }
         }).then((res) => {
+            setDesabilitar(true);
 
             if (res.data.erro) {
                 setModal(true);
+                setDesabilitar(true);
+                setMsgCor(styles.erro);
                 setMsg(res.data.msg);
                 return;
             }
 
-            setModal(false)
-            pegarDadosCarregar();
+            setMsgCor(styles.sucesso)
+            setMsg("Exclusao realizada com sucesso");
+            setTimeout(() => {
+                setDesabilitar(false)
+                setModal(false)
+                pegarDadosCarregar();
+            }, 1200);
         }).catch((err) => {
+            setDesabilitar(true)
             setMsg("Erro interno no servidor, contate o suporte");
         })
     }
@@ -38,13 +53,13 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
                 <ModalHeader toggle={toggle}>EXCLUIR</ModalHeader>
                 <ModalBody>
                     <h4>Deseja exluir {nome.slice(0, 20) + "..."} </h4>
-                    <p className={styles.erro}>{msg}</p>
+                    <p className={msgCor}>{msg}</p>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="secondary" onClick={() => setModal(false)}>
+                    <Button disabled={desabilitar} color="secondary" onClick={() => setModal(false)}>
                         CANCELAR
                     </Button>
-                    <Button color="danger" onClick={deletar}>
+                    <Button disabled={desabilitar} color="danger" onClick={deletar}>
                         EXCLUIR
                     </Button>{' '}
                 </ModalFooter>

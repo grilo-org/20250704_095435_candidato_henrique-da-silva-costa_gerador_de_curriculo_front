@@ -3,22 +3,23 @@ import { Button, FormGroup, Input, Label, Modal, ModalHeader, ModalBody } from '
 import styles from "../stylos.module.css"
 import axios from 'axios';
 import { colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
+import InputMask from "react-input-mask";
 
 const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "", data_nascimento, tamanhoModal = "md" }) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
+    const [msgCor, setMsgCor] = useState("");
     const [desabilitar, setDesabilitar] = useState(false);
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("EDITAR");
     const [modal, setModal] = useState(false);
 
-
     const pegarDados = () => {
-
         setModal(!modal)
         setMsg("")
         setErro({})
-        setFormulario(inputs);
+        setDesabilitar(true);
+        setTextoBotaoCarregando("CAREGANDO...")
 
         axios.get(urlGet).then((res) => {
             let ordenado = "";
@@ -49,6 +50,9 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     usuario_id: res.data.usuario_id,
                 }
             }
+
+            setDesabilitar(false);
+            setTextoBotaoCarregando("EDITAR")
 
             setFormulario(ordenado);
         }).catch((err) => {
@@ -109,11 +113,11 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
 
                 if (res.data.erro) {
                     setModal(true);
+                    setMsgCor(styles.erro);
                     setMsg(res.data.msg);
                     setDesabilitar(false);
                     setTextoBotaoCarregando("EDITAR")
                 }
-
 
                 if (res.data.campo) {
                     setMsg("");
@@ -122,12 +126,14 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                 setErro(msgerros);
             }
 
-
             if (!res.data.erro) {
                 pegarDadosCarregar();
-                setMsg("");
-                setModal(false)
-                setDesabilitar(false);
+                setMsgCor(styles.sucesso);
+                setMsg("Edição realizada com sucesso");
+                setTimeout(() => {
+                    setModal(false)
+                    setDesabilitar(false);
+                }, 1200);
                 setTextoBotaoCarregando("EDITAR")
             }
         }).catch((err) => {
@@ -151,6 +157,12 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     <option value={"outro"}>OUTRO</option>
                 </select>
                 <p className={styles.erro}>{erro[tipo]}</p>
+            </>
+        }
+
+        if (tipo == "telefone") {
+            return <>
+                <InputMask mask="(99) 99999-9999" className="form-control" placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo, tipoFormulario)} defaultValue={formulario[tipo]} onChange={changeInputs} />
             </>
         }
 
@@ -181,7 +193,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                                 }) : ""}
                             </div>
                         </FormGroup>
-                        <span className={styles.erro}>{msg}</span>
+                        <span className={msgCor}>{msg}</span>
                         <div className="d-flex gap-2 justify-content-end">
                             <Button color="danger" disabled={desabilitar} onClick={() => setModal(false)}>FECHAR</Button>
                             <Button color="success" disabled={desabilitar}>{textoBotaoCarregando}</Button>
