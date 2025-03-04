@@ -25,7 +25,7 @@ const Curriculos = () => {
     const inputs = {
         nome: "",
         sexo: "",
-        img: "",
+        img: null,
         descricao: "",
         estado_civil: "",
         telefone: "",
