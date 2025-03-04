@@ -85,11 +85,15 @@ const CurriculoExperiencias = () => {
         <>
             <Container>
                 <h1>Adicionar experiências</h1>
-                <div className="text-end d-flex gap-2 justify-content-end mb-3">
-                    <Cadastrar tamanhoBotao={"sm"} tipoFormulario={"experiencias"} inputs={inputs} url={"cadastrar/experiencia"} pegarDadosCarregar={pegarDados} />
-                    <Button color="secondary" size="sm" onClick={() => nav("/curriculos")}>VER CURRÍCULOS</Button>
-                    <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(curriculoId)}>VER CURRÍCULO</Button>
-                </div>
+                {dados.length > 0 ?
+                    <div className="text-end d-flex gap-2 justify-content-end mb-3">
+                        <Cadastrar tamanhoBotao={"sm"} tipoFormulario={"experiencias"} inputs={inputs} url={"cadastrar/experiencia"} pegarDadosCarregar={pegarDados} />
+                        <Button color="secondary" size="sm" onClick={() => nav("/curriculos")}>VER CURRÍCULOS</Button>
+                        <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => pegarCurriculo(curriculoId)}>VER CURRÍCULO</Button>
+                    </div> : <div className="text-end d-flex gap-2 justify-content-end mb-3">
+                        <Cadastrar tamanhoBotao={"sm"} tipoFormulario={"experiencias"} inputs={inputs} url={"cadastrar/experiencia"} pegarDadosCarregar={pegarDados} />
+                    </div>
+                }
                 {dados.length > 0 ?
                     <Table responsive striped size="sm">
                         <thead>
