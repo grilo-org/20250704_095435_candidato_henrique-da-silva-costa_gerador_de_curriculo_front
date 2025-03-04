@@ -249,3 +249,9 @@ export const tamanhoModalFull = (tipoFormulario) => {
         return true;
     }
 }
+
+export const tipoImg = (tipo) => {
+    if (tipo == "img") {
+        return "";
+    }
+}

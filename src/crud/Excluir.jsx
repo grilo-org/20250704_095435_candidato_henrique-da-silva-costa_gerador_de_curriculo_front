@@ -25,7 +25,9 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
 
             if (res.data.erro) {
                 setModal(true);
-                setDesabilitar(true);
+                setTimeout(() => {
+                    setDesabilitar(false);
+                }, 1200);
                 setMsgCor(styles.erro);
                 setMsg(res.data.msg);
                 return;
@@ -39,7 +41,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
                 pegarDadosCarregar();
             }, 1200);
         }).catch((err) => {
-            setDesabilitar(true)
+            setDesabilitar(false)
             setMsg("Erro interno no servidor, contate o suporte");
         })
     }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, FormGroup, Input, Label, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import styles from "../stylos.module.css"
 import axios from 'axios';
-import { colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
+import { colunas, tamanhoModalFull, tipoImg, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 import InputMask from "react-input-mask";
 
 const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "", data_nascimento, tamanhoModal = "md" }) => {
@@ -167,7 +167,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         }
 
         return <>
-            <Input placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo, tipoFormulario)} defaultValue={formulario[tipo]} onChange={changeInputs} />
+            <Input placeholder={tipoPlaceholder(tipo)} value={tipoImg(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo, tipoFormulario)} defaultValue={formulario[tipo]} onChange={changeInputs} />
         </>
     }
 
