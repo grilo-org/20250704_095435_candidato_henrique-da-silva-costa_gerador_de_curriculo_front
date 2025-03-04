@@ -1,6 +1,4 @@
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
 import './App.css'
-import Home from './Home'
 import { useContext, useEffect, useState } from 'react'
 import { Usuario } from './contexts/Usuario'
 import Paginas from './routes/Paginas'

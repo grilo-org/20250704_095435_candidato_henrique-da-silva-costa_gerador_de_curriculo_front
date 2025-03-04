@@ -8,7 +8,6 @@ import Excluir from '../crud/Excluir';
 import styles from "../stylos.module.css";
 import Carregando from '../components/Carregando';
 import InfoUsuario from '../components/InfoUsuario';
-import { FaArrowLeft } from 'react-icons/fa';
 import moment from 'moment';
 
 const Curriculos = () => {

@@ -1,5 +1,28 @@
-export const tipoPlaceholder = (tipo, tipoFormulario) => {
+export const campoObrigatorio = (tipo) => {
+    let campos = [
+        "email",
+        "emailVerificar",
+        "senha",
+        "novaSenha",
+        "confirmaSenha",
+        "habilidades",
+        "cargo",
+        "responsabilidades",
+        "descricao",
+        "empresa",
+        "data_nascimento",
+        "data_inicio",
+        "estado_civil",
+        "sexo",
+        "nome",
+        "telefone"];
 
+    if (campos.includes(tipo)) {
+        return true;
+    }
+}
+
+export const tipoPlaceholder = (tipo, tipoFormulario) => {
     if (tipo == "data_nascimento" && tipoFormulario == "experiencias" || tipoFormulario == "editarExperiencias") {
         return "";
     }

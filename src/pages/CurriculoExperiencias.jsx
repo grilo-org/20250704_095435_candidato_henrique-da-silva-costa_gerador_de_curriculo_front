@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft } from 'react-icons/fa';
 import { Button, Container, Table } from 'reactstrap';
 import moment from 'moment';
 import styles from "../stylos.module.css";

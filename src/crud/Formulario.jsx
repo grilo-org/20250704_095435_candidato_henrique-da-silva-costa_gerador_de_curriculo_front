@@ -4,7 +4,7 @@ import styles from "../stylos.module.css"
 import axios from 'axios';
 import { Usuario } from '../contexts/Usuario';
 import { useNavigate } from 'react-router-dom';
-import { colunas, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
+import { campoObrigatorio, colunas, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 import InputMask from "react-input-mask";
 
 const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBotao, tipoFormulario = "", botaoCor = "success", tamanhoBotao = "" }) => {
@@ -15,10 +15,19 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
     const [desabilitar, setDesabilitar] = useState(false);
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState(textoBotao);
     const { setAuth } = useContext(Usuario);
+    const [imglocalNome, setImglocalNome] = useState("");
     const nav = useNavigate();
 
     const changeInputs = (e) => {
         const { name, value, files } = e.target;
+
+        if (files) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImglocalNome(reader.result);
+            };
+            reader.readAsDataURL(files[0]);
+        }
 
         setFormulario({
             ...formulario, [name]: name === "img" ? files[0] : value
@@ -39,8 +48,6 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 "Content-Type": "multipart/form-data",
             },
         }).then((res) => {
-            console.log(formulario);
-
             for (const [key, value] of Object.entries(formulario)) {
                 if (value != null && value.length == 0 && key != "img") {
                     msgerros[key] = "Campo obrigatório";
@@ -129,8 +136,6 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                     setDesabilitar(false);
                     setTextoBotaoCarregando(textoBotaoCarregando)
                 }
-
-
                 setErro(msgerros);
             }
 
@@ -138,7 +143,9 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                 pegarDadosCarregar();
                 setMsgCor(styles.sucesso)
                 setMsg("Cadastro realizado com sucesso");
-                setDesabilitar(false);
+                setTimeout(() => {
+                    setDesabilitar(false);
+                }, 1200);
                 setTextoBotaoCarregando(textoBotaoCarregando)
             }
         }).catch((err) => {
@@ -150,8 +157,6 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
             setMsg("Erro interno no servidor. Por favor contate o suporte");
         })
     }
-
-
 
     const formatoDeInput = (tipo) => {
         if (tipo == "sexo") {
@@ -173,6 +178,17 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
             </>
         }
 
+        if (tipo == "img") {
+            return <Input
+                name={tipo}
+                accept="image/*"
+                value={formulario.tipo}
+                type={tipoInput(tipo, tipoFormulario)}
+                onChange={changeInputs}
+                disabled={desabilitar}
+            />
+        }
+
         return <>
             <Input type={tipoInput(tipo, tipoFormulario)} placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} onChange={changeInputs} />
             <p className={styles.erro}>{erro[tipo]}</p>
@@ -181,13 +197,25 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
 
     return (
         <div>
+            {imglocalNome && (
+                <div>
+                    <h3>Pré-visualização:</h3>
+                    <img
+                        src={imglocalNome}
+                        alt="Pré-visualização"
+                        style={{ maxWidth: '100%', height: '100px' }}
+                    />
+                </div>
+            )}
             <form onSubmit={enviar}>
                 <FormGroup>
                     <div className="row">
                         {formulario ? Object.keys(formulario).map((valor, index) => {
                             return (
                                 <div key={index} className={colunas(valor, tipoFormulario)}>
-                                    <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
+                                    <Label htmlFor={valor} className={styles.labels}><strong>{
+                                        campoObrigatorio(valor) ? <span className={styles.erro}>*</span> : ""
+                                    } {tipoLabel(valor, tipoFormulario)}</strong></Label>
                                     {formatoDeInput(valor)}
                                 </div>
                             )
@@ -199,7 +227,7 @@ const Formulario = ({ inputs = {}, pegarDadosCarregar = () => { }, url, textoBot
                     <Button color={botaoCor} className={styles.fonteBotao12} size={tamanhoBotao} disabled={desabilitar}>{textoBotaoCarregando}</Button>
                 </div>
             </form>
-        </div>
+        </div >
     )
 }
 

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Button, FormGroup, Input, Label, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import styles from "../stylos.module.css"
 import axios from 'axios';
-import { colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
+import { campoObrigatorio, colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
 const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = "", tipoFormulario = "", tamanhoBotao = "" }) => {
     const [formulario, setFormulario] = useState(inputs);
@@ -116,7 +116,9 @@ const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url
                                 {formulario ? Object.keys(formulario).map((valor, index) => {
                                     return (
                                         <div key={index} className={colunas(valor, tipoFormulario)}>
-                                            <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
+                                            <Label htmlFor={valor} className={styles.labels}><strong>{
+                                                campoObrigatorio(valor) ? <span className={styles.erro}>*</span> : ""
+                                            }{tipoLabel(valor, tipoFormulario)}</strong></Label>
                                             <Input className="form-control" placeholder={tipoPlaceholder(valor, tipoFormulario)} disabled={desabilitar} name={valor} type={tipoInput(valor, tipoFormulario)} onChange={changeInputs} />
                                             <p className={styles.erro}>{erro[valor]}</p>
                                         </div>

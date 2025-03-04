@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Button, FormGroup, Input, Label, Modal, ModalHeader, ModalBody } from 'reactstrap'
 import styles from "../stylos.module.css"
 import axios from 'axios';
-import { colunas, tamanhoModalFull, tipoImg, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
+import { campoObrigatorio, colunas, tamanhoModalFull, tipoImg, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 import InputMask from "react-input-mask";
 
 const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "", data_nascimento, tamanhoModal = "md" }) => {
@@ -13,6 +13,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
     const [desabilitar, setDesabilitar] = useState(false);
     const [textoBotaoCarregando, setTextoBotaoCarregando] = useState("EDITAR");
     const [modal, setModal] = useState(false);
+    const [imglocalNome, setImglocalNome] = useState("");
 
     const pegarDados = () => {
         setModal(!modal)
@@ -66,6 +67,14 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
 
     const changeInputs = (e) => {
         const { name, value, files } = e.target;
+
+        if (files) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImglocalNome(reader.result);
+            };
+            reader.readAsDataURL(files[0]);
+        }
 
         setFormulario({
             ...formulario, [name]: name === "img" ? files[0] : value
@@ -160,6 +169,17 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
             </>
         }
 
+        if (tipo == "img") {
+            return <Input
+                name={tipo}
+                accept="image/*"
+                value={formulario.tipo}
+                type={tipoInput(tipo, tipoFormulario)}
+                onChange={changeInputs}
+                disabled={desabilitar}
+            />
+        }
+
         if (tipo == "telefone") {
             return <>
                 <InputMask mask="(99) 99999-9999" className="form-control" placeholder={tipoPlaceholder(tipo)} disabled={desabilitar} name={tipo} type={tipoInput(tipo, tipoFormulario)} defaultValue={formulario[tipo]} onChange={changeInputs} />
@@ -182,10 +202,22 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     <form onSubmit={enviar}>
                         <FormGroup>
                             <div className="row">
+                                {imglocalNome && (
+                                    <div>
+                                        <h3>Pré-visualização:</h3>
+                                        <img
+                                            src={imglocalNome}
+                                            alt="Pré-visualização"
+                                            style={{ maxWidth: '100%', height: '100px' }}
+                                        />
+                                    </div>
+                                )}
                                 {formulario ? Object.keys(formulario).map((valor, index) => {
                                     return (
                                         <div key={index} className={colunas(valor, tipoFormulario)}>
-                                            <Label htmlFor={valor} className={styles.labels}><strong>{tipoLabel(valor, tipoFormulario)}</strong></Label>
+                                            <Label htmlFor={valor} className={styles.labels}><strong>{
+                                                campoObrigatorio(valor) ? <span className={styles.erro}>*</span> : ""
+                                            }{tipoLabel(valor, tipoFormulario)}</strong></Label>
                                             {formatoDeInput(valor)}
                                             <p className={styles.erro}>{erro[valor]}</p>
                                         </div>

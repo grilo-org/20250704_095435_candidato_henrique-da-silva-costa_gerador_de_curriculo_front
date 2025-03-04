@@ -3,6 +3,7 @@ import { Button, Container } from 'reactstrap';
 import Formulario from './crud/Formulario';
 import { useNavigate } from 'react-router-dom';
 import InfoUsuario from './components/InfoUsuario';
+
 const Home = () => {
     const [usuario, setUsuario] = useState(sessionStorage.getItem("usuario") ? JSON.parse(sessionStorage.getItem("usuario")) : "");
     const nav = useNavigate();
