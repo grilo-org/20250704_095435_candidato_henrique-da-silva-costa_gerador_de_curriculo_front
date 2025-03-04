@@ -95,7 +95,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     msgerros[key] = `O campo ${key} dever ter no maximo 10 caracteres`;
                 }
 
-                if (value != null && value.length > 255) {
+                if (value != null && value.length > 255 && key != "img") {
                     msgerros[key] = `O campo ${key} dever ter no maximo 255 caracteres`;
                 }
 
