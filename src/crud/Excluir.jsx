@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import styles from "../stylos.module.css"
 
-const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "", tamanhoBotao = "" }) => {
+const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "", tamanhoBotao = "", item = "" }) => {
     const [modal, setModal] = useState(false);
     const [msg, setMsg] = useState("");
     const [msgCor, setMsgCor] = useState("");
@@ -54,7 +54,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
             <Modal backdrop={modal ? "static" : true} isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>EXCLUIR</ModalHeader>
                 <ModalBody>
-                    <h4>Deseja exluir {nome.slice(0, 20) + "..."} </h4>
+                    <h4>Deseja exluir {item}</h4>
                     <p className={msgCor}>{msg}</p>
                 </ModalBody>
                 <ModalFooter>
