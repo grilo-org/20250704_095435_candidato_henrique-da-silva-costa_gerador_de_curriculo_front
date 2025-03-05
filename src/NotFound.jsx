@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Container } from 'reactstrap';
+import { Button, Container } from 'reactstrap';
 
 const NotFound = () => {
     const nav = useNavigate();
