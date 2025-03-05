@@ -7,7 +7,7 @@ const NotFound = () => {
 
     return (
         <>
-            <Button color="success" onClick={() => nav("/")}>CADASTRAR CURRÍCULO</Button>
+            <Button color="secondary" onClick={() => nav("/")}>Pagina Inical</Button>
             <Container>
                 <div><h1 className="text-center">Pagiana não encontrada</h1></div>
             </Container>
