@@ -17,11 +17,11 @@ const RecuperarSenha = () => {
 
     return (
         <>
-            <h1 className="text-center">Recuperar senha</h1>
             <Button color="transparent" onClick={() => nav("/verificaremail")}>
                 <FaArrowLeft fontSize={45} className="m-2" />
             </Button>
             <Container className={styles.formularioContainer}>
+                <h1 className="text-center">Recuperar senha</h1>
                 <Formulario botaoCor={"primary"} url={"recuperarsenha"} textoBotao={"RECUPERAR SENHA"} inputs={inputs} tipoFormulario={"recuperarSenha"} />
             </Container>
         </>
