@@ -4,7 +4,14 @@ import styles from "../stylos.module.css"
 import axios from 'axios';
 import { campoObrigatorio, colunas, tamanhoModalFull, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 
-const Cadastrar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, url = "", tipoFormulario = "", tamanhoBotao = "" }) => {
+const Cadastrar = ({
+    inputs = {},
+    pegarDadosCarregar = () => { },
+    id = null,
+    url = "",
+    tipoFormulario = "",
+    tamanhoBotao = ""
+}) => {
     const [formulario, setFormulario] = useState(inputs);
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
