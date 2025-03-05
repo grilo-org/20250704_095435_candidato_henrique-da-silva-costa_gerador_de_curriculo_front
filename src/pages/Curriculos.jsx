@@ -109,7 +109,7 @@ const Curriculos = () => {
                                                 <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id)}>VER EXPERIÊNCIAS</Button>
                                                 <Button className={styles.fonteBotao12} size="sm" color="secondary" onClick={() => pegarCurriculo(dado.id)}>VER CURRÍCULO</Button>
                                                 <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
-                                                <Excluir item="currículo" tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
+                                                <Excluir item="o currículo" tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
                                     )

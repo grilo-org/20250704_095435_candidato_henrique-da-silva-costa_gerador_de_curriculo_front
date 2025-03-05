@@ -114,7 +114,7 @@ const CurriculoExperiencias = () => {
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <ModalExperiencias id={dado.id} />
                                                 <Editar tamanhoModal={"xl"} data_nascimento={curriculo.data_nascimento} urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"experiencias"} pegarDadosCarregar={pegarDados} />
-                                                <Excluir item="experiência" tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
+                                                <Excluir item="a experiência" tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
                                     )
