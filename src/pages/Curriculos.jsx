@@ -95,6 +95,7 @@ const Curriculos = () => {
                         <thead>
                             <tr>
                                 <th>Titulo</th>
+                                <th>Data de criação</th>
                                 <th></th>
                             </tr>
                         </thead>
