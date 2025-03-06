@@ -32,8 +32,9 @@ const Curriculos = () => {
         usuario_id: usuario.id,
     }
 
-    const verExperiencias = (id) => {
+    const verExperiencias = (id, data_nascimento) => {
         localStorage.setItem("curriculoId", id);
+        localStorage.setItem("dataNascimento", data_nascimento);
         nav("/experiencias");
     }
 
@@ -101,9 +102,9 @@ const Curriculos = () => {
                                             <td>{dado.nome ? dado.nome.slice(0, 30) + "..." : "não informado"}</td>
                                             <td>{moment(dado.criado).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
-                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id)}>VER EXPERIÊNCIAS</Button>
+                                                <Button className={styles.fonteBotao12} size="sm" color="primary" onClick={() => verExperiencias(dado.id, dado.data_nascimento)}>VER EXPERIÊNCIAS</Button>
                                                 <Button className={styles.fonteBotao12} size="sm" color="secondary" onClick={() => pegarCurriculo(dado.id)}>VER CURRÍCULO</Button>
-                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/curriculoid/${dado.id}`} inputs={inputs} url={"editar/curriculo"} tipoFormulario={"editar"} />
+                                                <Editar urlGetLista="curriculo" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/curriculoid/${dado.id}`} url={"editar/curriculo"} tipoFormulario={"editar"} />
                                                 <Excluir item="o currículo" tamanhoBotao={"sm"} url={"excluircurriculo"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>

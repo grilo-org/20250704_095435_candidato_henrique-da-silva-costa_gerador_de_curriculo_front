@@ -5,8 +5,8 @@ import axios from 'axios';
 import { campoObrigatorio, colunas, tamanhoModalFull, tipoImg, tipoInput, tipoLabel, tipoPlaceholder } from './funcoesFormularios';
 import InputMask from "react-input-mask";
 
-const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "", data_nascimento, tamanhoModal = "md" }) => {
-    const [formulario, setFormulario] = useState(inputs);
+const Editar = ({ pegarDadosCarregar = () => { }, urlGet = "", url = "", tipoFormulario = "", tamanhoBotao = "", urlGetLista = "", data_nascimento, tamanhoModal = "md" }) => {
+    const [formulario, setFormulario] = useState({});
     const [erro, setErro] = useState({});
     const [msg, setMsg] = useState("");
     const [msgCor, setMsgCor] = useState("");
@@ -23,40 +23,38 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         setTextoBotaoCarregando("CAREGANDO...")
 
         axios.get(urlGet).then((res) => {
-            if (urlGetLista == "experiencias" && res.data) {
-                setFormulario({
-                    cargo: res.data.cargo,
-                    empresa: res.data.empresa,
-                    habilidades: res.data.habilidades,
-                    data_inicio: res.data.data_inicio,
-                    data_fim: res.data.data_fim,
-                    responsabilidades: res.data.responsabilidades,
-                    id: res.data.id,
-                    curriculo_id: res.data.curriculo_id,
-                    data_nascimento: data_nascimento == "" ? res.data.sdata_nascimento : data_nascimento,
-                });
-
-            }
-            if (urlGetLista == "curriculo" && res.data) {
-                setFormulario({
-                    img: res.data.img,
-                    telefone: res.data.telefone,
-                    nome: res.data.nome,
-                    sexo: res.data.sexo,
-                    estado_civil: res.data.estado_civil,
-                    data_nascimento: res.data.data_nascimento,
-                    descricao: res.data.descricao,
-                    id: res.data.id,
-                    usuario_id: res.data.usuario_id,
-                })
-            }
-
-
             setTimeout(() => {
+
                 setDesabilitar(false);
                 setTextoBotaoCarregando("EDITAR")
-            }, 1200);
+                if (urlGetLista === "experiencias") {
+                    setFormulario({
+                        cargo: res.data.cargo,
+                        empresa: res.data.empresa,
+                        habilidades: res.data.habilidades,
+                        data_inicio: res.data.data_inicio,
+                        data_fim: res.data.data_fim,
+                        responsabilidades: res.data.responsabilidades,
+                        id: res.data.id,
+                        curriculo_id: res.data.curriculo_id,
+                        data_nascimento: data_nascimento == "" ? res.data.data_nascimento : data_nascimento,
+                    })
+                }
 
+                if (urlGetLista === "curriculo") {
+                    setFormulario({
+                        img: res.data.img,
+                        telefone: res.data.telefone,
+                        nome: res.data.nome,
+                        sexo: res.data.sexo,
+                        estado_civil: res.data.estado_civil,
+                        data_nascimento: res.data.data_nascimento,
+                        descricao: res.data.descricao,
+                        id: res.data.id,
+                        usuario_id: res.data.usuario_id,
+                    })
+                }
+            }, 1200);
 
         }).catch((err) => {
             alert("Erro interno no servidor");

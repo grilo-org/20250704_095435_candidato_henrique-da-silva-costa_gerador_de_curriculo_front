@@ -22,14 +22,13 @@ const CurriculoExperiencias = () => {
     const curriculo = localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : "";
 
     const inputs = {
-        cargo: "",
         empresa: "",
-        habilidades: "",
+        cargo: "",
+        curriculo_id: curriculoId,
         data_inicio: "",
         data_fim: "",
+        habilidades: "",
         responsabilidades: "",
-        curriculo_id: curriculoId,
-        data_nascimento: curriculo.data_nascimento ? curriculo.data_nascimento : "",
     }
 
     const pegarCurriculo = (id) => {
@@ -113,7 +112,7 @@ const CurriculoExperiencias = () => {
                                             <td>{moment(dado.data_fim).format("DD/MM/YYYY")}</td>
                                             <td className="d-flex gap-2 justify-content-end">
                                                 <ModalExperiencias id={dado.id} />
-                                                <Editar tamanhoModal={"xl"} data_nascimento={curriculo.data_nascimento} urlGetLista="experiencias" tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/experiencia/${dado.id}`} inputs={inputs} url={"editar/experiencia"} tipoFormulario={"experiencias"} pegarDadosCarregar={pegarDados} />
+                                                <Editar tamanhoModal={"xl"} data_nascimento={localStorage.getItem("dataNascimento")} urlGetLista="experiencias" pegarDadosCarregar={pegarDados} tamanhoBotao={"sm"} urlGet={`https://henriquedeveloper.com.br/experiencia/${dado.id}`} url={"editar/experiencia"} tipoFormulario={"experiencias"} />
                                                 <Excluir item="a experiência" tamanhoBotao={"sm"} url={"excluirexperiencia"} id={dado.id} pegarDadosCarregar={pegarDados} />
                                             </td>
                                         </tr>
