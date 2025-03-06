@@ -29,12 +29,6 @@ const Curriculos = () => {
         estado_civil: "",
         telefone: "",
         data_nascimento: "",
-        empresa: "",
-        cargo: "",
-        responsabilidades: "",
-        habilidades: "",
-        data_inicio: "",
-        data_fim: "",
         usuario_id: usuario.id,
     }
 
