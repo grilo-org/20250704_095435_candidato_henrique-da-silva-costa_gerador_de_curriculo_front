@@ -36,6 +36,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     curriculo_id: res.data.curriculo_id,
                     data_nascimento: data_nascimento == "" ? res.data.sdata_nascimento : data_nascimento,
                 }
+                setFormulario(ordenado);
             }
 
             if (urlGetLista == "curriculo") {
@@ -50,12 +51,12 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     id: res.data.id,
                     usuario_id: res.data.usuario_id,
                 }
+                setFormulario(ordenado);
             }
 
             setTimeout(() => {
                 setDesabilitar(false);
                 setTextoBotaoCarregando("EDITAR")
-                setFormulario(ordenado);
             }, 1200);
 
 
