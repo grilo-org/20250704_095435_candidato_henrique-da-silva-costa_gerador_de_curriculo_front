@@ -23,9 +23,8 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         setTextoBotaoCarregando("CAREGANDO...")
 
         axios.get(urlGet).then((res) => {
-            let ordenado = "";
             if (urlGetLista == "experiencias") {
-                ordenado = {
+                setFormulario({
                     cargo: res.data.cargo,
                     empresa: res.data.empresa,
                     habilidades: res.data.habilidades,
@@ -35,11 +34,11 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     id: res.data.id,
                     curriculo_id: res.data.curriculo_id,
                     data_nascimento: data_nascimento == "" ? res.data.sdata_nascimento : data_nascimento,
-                }
+                });
             }
 
             if (urlGetLista == "curriculo") {
-                ordenado = {
+                setFormulario({
                     img: res.data.img,
                     telefone: res.data.telefone,
                     nome: res.data.nome,
@@ -49,13 +48,12 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                     descricao: res.data.descricao,
                     id: res.data.id,
                     usuario_id: res.data.usuario_id,
-                }
+                })
             }
 
             setTimeout(() => {
                 setDesabilitar(false);
                 setTextoBotaoCarregando("EDITAR")
-                setFormulario(ordenado);
             }, 1200);
 
 
