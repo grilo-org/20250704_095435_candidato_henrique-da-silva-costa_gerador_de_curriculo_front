@@ -22,11 +22,11 @@ const CurriculoExperiencias = () => {
     const curriculo = localStorage.getItem("curriculo") ? JSON.parse(localStorage.getItem("curriculo")) : "";
 
     const inputs = {
-        data_inicio: "",
-        data_fim: "",
+        cargo: "",
         empresa: "",
         habilidades: "",
-        cargo: "",
+        data_inicio: "",
+        data_fim: "",
         responsabilidades: "",
         curriculo_id: curriculoId,
         data_nascimento: curriculo.data_nascimento ? curriculo.data_nascimento : "",
