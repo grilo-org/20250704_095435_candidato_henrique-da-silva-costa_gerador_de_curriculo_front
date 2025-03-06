@@ -55,10 +55,10 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
             setTimeout(() => {
                 setDesabilitar(false);
                 setTextoBotaoCarregando("EDITAR")
+                setFormulario(ordenado);
             }, 1200);
 
 
-            setFormulario(ordenado);
         }).catch((err) => {
             alert("Erro interno no servidor");
         });
