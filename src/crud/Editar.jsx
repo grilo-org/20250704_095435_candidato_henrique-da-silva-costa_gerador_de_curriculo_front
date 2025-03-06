@@ -23,7 +23,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         setTextoBotaoCarregando("CAREGANDO...")
 
         axios.get(urlGet).then((res) => {
-            if (urlGetLista == "experiencias") {
+            if (urlGetLista == "experiencias" && res.data) {
                 setFormulario({
                     cargo: res.data.cargo,
                     empresa: res.data.empresa,
@@ -37,7 +37,7 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                 });
 
             }
-            if (urlGetLista == "curriculo") {
+            if (urlGetLista == "curriculo" && res.data) {
                 setFormulario({
                     img: res.data.img,
                     telefone: res.data.telefone,
