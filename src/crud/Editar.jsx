@@ -23,6 +23,20 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
         setTextoBotaoCarregando("CAREGANDO...")
 
         axios.get(urlGet).then((res) => {
+            if (urlGetLista == "curriculo") {
+                setFormulario({
+                    img: res.data.img,
+                    telefone: res.data.telefone,
+                    nome: res.data.nome,
+                    sexo: res.data.sexo,
+                    estado_civil: res.data.estado_civil,
+                    data_nascimento: res.data.data_nascimento,
+                    descricao: res.data.descricao,
+                    id: res.data.id,
+                    usuario_id: res.data.usuario_id,
+                })
+            }
+
             if (urlGetLista == "experiencias") {
                 setFormulario({
                     cargo: res.data.cargo,
@@ -37,19 +51,6 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                 });
             }
 
-            if (urlGetLista == "curriculo") {
-                setFormulario({
-                    img: res.data.img,
-                    telefone: res.data.telefone,
-                    nome: res.data.nome,
-                    sexo: res.data.sexo,
-                    estado_civil: res.data.estado_civil,
-                    data_nascimento: res.data.data_nascimento,
-                    descricao: res.data.descricao,
-                    id: res.data.id,
-                    usuario_id: res.data.usuario_id,
-                })
-            }
 
             setTimeout(() => {
                 setDesabilitar(false);
