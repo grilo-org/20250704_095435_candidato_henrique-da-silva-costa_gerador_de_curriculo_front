@@ -51,7 +51,6 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                 });
             }
 
-
             setTimeout(() => {
                 setDesabilitar(false);
                 setTextoBotaoCarregando("EDITAR")
