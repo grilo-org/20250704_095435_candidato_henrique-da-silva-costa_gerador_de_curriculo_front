@@ -8,6 +8,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
     const [msg, setMsg] = useState("");
     const [msgCor, setMsgCor] = useState("");
     const [desabilitar, setDesabilitar] = useState(false);
+    const [textoBotao, setTextoBotao] = useState("EXCLUIR");
 
     const toggle = () => {
         setMsgCor("")
@@ -16,6 +17,8 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
     };
 
     const deletar = () => {
+
+        setTextoBotao("CARREGANDO...")
         axios.options(`https://henriquedeveloper.com.br/${url}`, { params: { id: id } }, {
             headers: {
                 "content-type": "application/json"
@@ -27,6 +30,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
                 setModal(true);
                 setTimeout(() => {
                     setDesabilitar(false);
+                    setTextoBotao("EXCLUIR")
                 }, 1200);
                 setMsgCor(styles.erro);
                 setMsg(res.data.msg);
@@ -37,11 +41,13 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
             setMsg("Exclusao realizada com sucesso");
             setTimeout(() => {
                 setDesabilitar(false)
+                setTextoBotao("EXCLUIR")
                 setModal(false)
                 pegarDadosCarregar();
             }, 1200);
         }).catch((err) => {
             setDesabilitar(false)
+            setTextoBotao("EXCLUIR")
             setMsg("Erro interno no servidor, contate o suporte");
         })
     }
@@ -62,7 +68,7 @@ const Excluir = ({ id = null, nome = "", pegarDadosCarregar = () => { }, url = "
                         CANCELAR
                     </Button>
                     <Button disabled={desabilitar} color="danger" onClick={deletar}>
-                        EXCLUIR
+                        {textoBotao}
                     </Button>{' '}
                 </ModalFooter>
             </Modal>
