@@ -52,8 +52,11 @@ const Editar = ({ inputs = {}, pegarDadosCarregar = () => { }, id = null, urlGet
                 }
             }
 
-            setDesabilitar(false);
-            setTextoBotaoCarregando("EDITAR")
+            setTimeout(() => {
+                setDesabilitar(false);
+                setTextoBotaoCarregando("EDITAR")
+            }, 1200);
+
 
             setFormulario(ordenado);
         }).catch((err) => {
