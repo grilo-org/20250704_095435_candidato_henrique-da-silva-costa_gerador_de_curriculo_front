@@ -25,6 +25,7 @@ const CurriculoExperiencias = () => {
         empresa: "",
         cargo: "",
         curriculo_id: curriculoId,
+        data_nascimento: curriculo.data_nascimento,
         data_inicio: "",
         data_fim: "",
         habilidades: "",
